@@ -164,12 +164,12 @@ function destroyer(arr) {
     arrDestroyer[i-1] = arguments[i];
   }
   function filterArray(arg) {
-      if (arrDestroyer.indexOf(arg) < 0) {
-        return true;
-      } else {
-        return false;
-      }
+    if (arrDestroyer.indexOf(arg) < 0) {
+      return true;
+    } else {
+      return false;
     }
+  }
   var arrNew = [];
   arrNew = arrOriginal.filter(filterArray);
   return arrNew;
