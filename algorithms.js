@@ -184,3 +184,28 @@ function getIndexToIns(arr, num) {
   } while (intInsert > arrSorted[intIndex]);
   return intIndex;
 }
+/*Function used to decipher ROT13 Caesar Cipher*/
+function rot13(str) {
+  var arrStr = str.split("");
+  var arrChar = [];
+  var arrDecode = [];
+  for (i=0; i<arrStr.length; i++) {
+    arrChar[i] = arrStr[i].replace(/\w/, arrStr[i].charCodeAt(0));
+    if (arrChar[i] >= 65 && arrChar[i] <= 77) {
+      arrChar[i] = parseInt(arrChar[i]) + 13;
+      arrDecode[i] = String.fromCharCode(arrChar[i]);
+    } else if (arrChar[i] >= 78 && arrChar[i] <= 90) {
+      arrChar[i] -= 13;
+      arrDecode[i] = String.fromCharCode(arrChar[i]);
+    } else if (arrChar[i] >= 97 && arrChar[i] <= 109) {
+      arrChar[i] = parseInt(arrChar[i]) + 13;
+      arrDecode[i] = String.fromCharCode(arrChar[i]);
+    } else if (arrChar[i] >= 110 && arrChar[i] <= 122) {
+      arrChar[i] -= 13;
+      arrDecode[i] = String.fromCharCode(arrChar[i]);
+    } else {
+      arrDecode[i] = arrChar[i];
+    }
+  }
+  return arrDecode.join("");
+}
