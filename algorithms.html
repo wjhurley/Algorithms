@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Algorithms</title>
+    <script src="algorithms.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      function convert() {
+        intDecimal = document.getElementById("decimalNum").value;
+        lblRomanNum = document.getElementById("romanNum");
+        lblRomanNum.innerHTML = convertToRoman(intDecimal);
+      }
+    </script>
+  </head>
+  <body>
+    <label for="decimalNum">Enter Number</label>
+    <input type="text" id="decimalNum" />
+    <input type="submit" onclick="convert();" />
+    <div id="romanNum"></div>
+  </body>
+</html>

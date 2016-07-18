@@ -150,7 +150,6 @@ function bouncer(arr) {
       return true;
     }
   }
-
   var arrNew = [];
   arrNew = arr.filter(checkFalsy);
   return arrNew;
@@ -208,4 +207,81 @@ function rot13(str) {
     }
   }
   return arrDecode.join("");
+}
+/*Given an array of two integers, returns the total sum of all integers between including the two integers*/
+function sumAll(arr) {
+  var intTotal = 0;
+  function reducer(arr1, arr2) {
+    for(i=arr1; i<=arr2; i++) {
+      intTotal += i;
+    }
+    return intTotal;
+  }
+  var intMin = Math.min(arr[0], arr[1]);
+  if (intMin == arr[0]) {
+    return arr.reduce(reducer);
+  } else {
+    return arr.reduce(reducer, arr[1]);
+  }
+}
+/*Given two arrays, returns an array consisting of elements not existing in both arrays*/
+function diffArray(arr1, arr2) {
+  var arrNew = [];
+  function filterArray(arg) {
+    if (this.indexOf(arg) < 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  arrNew = arr2.filter(filterArray, arr1);
+  arrNew = arrNew.concat(arr1.filter(filterArray, arr2));
+  return arrNew;
+}
+/*Function returns the Roman Numeral for the argument provided*/
+function convertToRoman(num) {
+  var arrNum = String(num).split('').reverse();
+  var arrRoman = ['I','V','X','L','C','D','M','',''];
+  var arrRomanNum = [];
+  var arrTemp = [];
+  function convertRoman(arg) {
+    var strTempRoman = "";
+    switch(parseInt(arg[0])) {
+      case 0:
+        break;
+      case 1:
+      case 2:
+      case 3:
+        for(j=0; j<parseInt(arg[0]); j++) {
+          strTempRoman += arg[1];
+        }
+        break;
+      case 4:
+        strTempRoman = arg[1] + arg[2];
+        break;
+      case 5:
+        strTempRoman = arg[2];
+        break;
+      case 6:
+      case 7:
+      case 8:
+        strTempRoman = arg[2];
+        for(k=0; k<(parseInt(arg[0]) - 5); k++) {
+          strTempRoman += arg[1];
+        }
+        break;
+      case 9:
+        strTempRoman = arg[1] + arg[3];
+        break;
+    }
+    return arrRomanNum.push(strTempRoman);
+  }
+  for(i=0; i<arrNum.length; i++) {
+    arrTemp[0] = arrNum[i];
+    arrTemp[1] = arrRoman[(i*2)];
+    arrTemp[2] = arrRoman[(i*2+1)];
+    arrTemp[3] = arrRoman[(i*2+2)];
+    convertRoman(arrTemp);
+  }
+  return arrRomanNum.reverse().join('').trimRight();
 }
