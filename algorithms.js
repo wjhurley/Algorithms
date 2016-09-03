@@ -285,3 +285,99 @@ function convertToRoman(num) {
   }
   return arrRomanNum.reverse().join('').trimRight();
 }
+/*Given an array of objects (1st argument), function will return all objects that have matching property and value pairs as 2nd argument*/
+function whatIsInAName(collection, source) {
+  // What's in a name?
+  var arr = [];
+  // Only change code below this line
+  var arrExists = [];
+  var arrSource = Object.keys(source);
+  for (var j=0; j<collection.length; j++) {
+    var intCounter = 0;
+    for (var name in collection[j]) {
+      if (source.hasOwnProperty(name) && source[name] == collection[j][name]) {
+        intCounter++;
+      }
+    }
+    if (intCounter == arrSource.length) {
+      arrExists.push(collection[j]);
+    }
+  }
+  // Only change code above this line
+  return arrExists;
+}
+/*Given three arguments, the function will find a word (before) in a string (str) and replace it with a new word (after) preserving the case of the original word*/
+function myReplace(str, before, after) {
+  var arrStr = str.split(" ");
+  var regReplace = /[A-Z]/;
+  var strNew = "";
+  var strAfter = "";
+  if (regReplace.test(before)) {
+    strAfter = after.charAt(0).toUpperCase();
+    strAfter += after.slice(1);
+    arrStr.splice(arrStr.indexOf(before), 1, strAfter);
+    strNew = arrStr.join(' ');
+  } else {
+    arrStr.splice(arrStr.indexOf(before), 1, after);
+    strNew = arrStr.join(' ');
+  }
+  return strNew;
+}
+/*Given a string (single word), returns the pig latin version*/
+function translatePigLatin(str) {
+  var regVowel = /[aeiou]/;
+  var strPigLatin = "";
+  var arrStr = [];
+  var intVowel = str.toLowerCase().search(regVowel);
+  if (intVowel < 1) {
+    arrStr = str.split();
+    arrStr.push("way");
+    strPigLatin = arrStr.join("");
+  } else {
+    arrStr = str.split(str.charAt(intVowel), 1);
+    arrStr.push(str.substr(intVowel));
+    arrStr.reverse().push("ay");
+    strPigLatin = arrStr.join("");
+  }
+  return strPigLatin;
+}
+/*Given a DNA strand, returns an array including the pairing element (i.e. A(1st strand):T(pairing element), T:A, C:G, G:C)*/
+function pairElement(str) {
+  var arrStr = str.split("");
+  var arrDNA = [];
+  for(var index in arrStr) {
+    arrDNA.push([]);
+    arrDNA[index].push(arrStr[index]);
+  }
+  for(var i=0; i<arrStr.length; i++) {
+    switch(arrStr[i]) {
+      case "A":
+        arrDNA[i].push("T");
+        break;
+      case "T":
+        arrDNA[i].push("A");
+        break;
+      case "C":
+        arrDNA[i].push("G");
+        break;
+      case "G":
+        arrDNA[i].push("C");
+        break;
+    }
+  }
+  return arrDNA;
+}
+/*Finds the missing letter in a string of consecutive characters. If there is no missing letter, returns undefined.*/
+function fearNotLetter(str) {
+  var intStart = str.charCodeAt(0);
+  var i = 1;
+  while(intStart + i === str.charCodeAt(i)) {
+    i++;
+    console.log(i);
+  }
+  if (str.charCodeAt(i)) {
+    return String.fromCharCode(intStart + i);
+  } else {
+    return undefined;
+  }
+}
