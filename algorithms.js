@@ -149,6 +149,7 @@ function mutation(arr) {
 }
 /*Checks for falsy values in an array and removes them*/
 function bouncer(arr) {
+  var arrNew = [];
   function checkFalsy(arg) {
     if (!arg) {
       return false;
@@ -156,7 +157,6 @@ function bouncer(arr) {
       return true;
     }
   }
-  var arrNew = [];
   arrNew = arr.filter(checkFalsy);
   return arrNew;
 }
@@ -379,11 +379,107 @@ function fearNotLetter(str) {
   var i = 1;
   while(intStart + i === str.charCodeAt(i)) {
     i++;
-    console.log(i);
   }
   if (str.charCodeAt(i)) {
     return String.fromCharCode(intStart + i);
   } else {
     return undefined;
   }
+}
+/*Checks if input provided is a boolean primitive (true or false)*/
+function booWho(bool) {
+  if(bool === true || bool === false) {
+    return true;
+  } else {
+    return false;
+  }
+}
+/*Given two or more arrays, returns a new array with unique values from the original arrays, in the order provided*/
+function uniteUnique(arr) {
+  var arrUnique = arguments[0];
+  for(var i=1; i<arguments.length; i++) {
+    for(var j=0; j<arguments[i].length; j++) {
+      if(arrUnique.indexOf(arguments[i][j]) === -1) {
+        arrUnique.push(arguments[i][j]);
+      }
+    }
+  }
+  return arrUnique;
+}
+/*Given a string with &, <, >, ", or ', returns the same string with the special characters escaped*/
+function convertHTML(str) {
+  var strHTML = "";
+  var regHTML = /[&<>"']/g;
+  function escapingHTML(reg) {
+    var arrReg = ["&", "<", ">", '"', "'"];
+    var arrEsc = ["&amp;", "&lt;", "&gt;", "&quot;", "&apos;"];
+    var intReg = arrReg.indexOf(reg);
+    var strReg = arrEsc[intReg];
+    return strReg;
+  }
+  strHTML = str.replace(regHTML, escapingHTML);
+  return strHTML;
+}
+/*Given a string, returns the string in spinal case (all lower case words joined by dashes)*/
+function spinalCase(str) {
+  var regSpace = /\s|[_]/g;
+  var regDash = /\B[A-Z]/g;
+  var strSpinal = "";
+  function placeDashes(match) {
+    return "-" + match.toLowerCase();
+  }
+  strSpinal = str.replace(regSpace, "-");
+  strSpinal = strSpinal.replace(regDash, placeDashes);
+  strSpinal = strSpinal.toLowerCase();
+  return strSpinal;
+}
+/*Given a positive number, return the sum of all odd numbers in the fibonacci sequence that are less than or equal to that number*/
+function sumFibs(num) {
+  var intA = 1;
+  var intB = 1;
+  var intMax = parseInt(num);
+  var arrFib = [intA, intB];
+  function fibonacciOdd(arg) {
+    if(arg % 2 === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  function addArray(previousValue, currentValue) {
+    return previousValue + currentValue;
+  }
+  while(intMax >= intA) {
+    intA += intB;
+    intB += intA;
+    if(intMax >= intB) {
+      arrFib.push(intA, intB);
+    } else if(intMax >= intA) {
+      arrFib.push(intA);
+    }
+  }
+  var arrOdd = arrFib.filter(fibonacciOdd);
+  return arrOdd.reduce(addArray);
+}
+/*Given a positive number, adds all prime numbers up to and including the number (if that number is prime)*/
+function sumPrimes(num) {
+  var arrPrimes = [];
+  var i = 1;
+  function addPrimes(previousValue, currentValue) {
+    return previousValue + currentValue;
+  }
+  while(i<=num) {
+    var arrDivisors = [];
+    for(var j=1; j<=i; j++) {
+      if(i%j===0) {
+        arrDivisors.push(j);
+      }
+    }
+    if(arrDivisors.length===2) {
+      arrPrimes.push(i);
+    }
+    i++;
+  }
+  var intSum = arrPrimes.reduce(addPrimes);
+  return intSum;
 }
