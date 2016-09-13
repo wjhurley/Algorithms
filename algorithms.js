@@ -503,3 +503,17 @@ function smallestCommons(arr) {
   } while(j !== arrNum.length);
   return intPossibleMultiple;
 }
+/*Function takes an array and a function as arguments and returns the first element in the array that passes the test in the function*/
+function findElement(arr, func) {
+  var arrPassing = arr.filter(func);
+  return arrPassing[0];
+}
+/*Function takes an array and a function as arguments and returns a new array of the same elements starting from the first element to pass the test in the function*/
+function dropElements(arr, func) {
+  var arrTrue = arr.filter(func);
+  var arrReduced = [];
+  if(arrTrue[0]) {
+    arrReduced = arr.slice(arr.indexOf(arrTrue[0]));
+  }
+  return arrReduced;
+}
