@@ -293,9 +293,7 @@ function convertToRoman(num) {
 }
 /*Given an array of objects (1st argument), function will return all objects that have matching property and value pairs as 2nd argument*/
 function whatIsInAName(collection, source) {
-  // What's in a name?
   var arr = [];
-  // Only change code below this line
   var arrExists = [];
   var arrSource = Object.keys(source);
   for (var j=0; j<collection.length; j++) {
@@ -309,7 +307,6 @@ function whatIsInAName(collection, source) {
       arrExists.push(collection[j]);
     }
   }
-  // Only change code above this line
   return arrExists;
 }
 /*Given three arguments, the function will find a word (before) in a string (str) and replace it with a new word (after) preserving the case of the original word*/
@@ -482,4 +479,27 @@ function sumPrimes(num) {
   }
   var intSum = arrPrimes.reduce(addPrimes);
   return intSum;
+}
+/*Given two integers, finds the smallest common multiple that can be evenly divided by all numbers between the two integers, including those integers*/
+function smallestCommons(arr) {
+  var arrNum = [];
+  arr.sort(function(a, b) {
+    return b - a;
+  });
+  for(var i = arr[0];i >= arr[1]; i--) {
+    arrNum.push(i);
+  }
+  var loop = 1;
+  var intPossibleMultiple = 0;
+  var j = 0;
+  do {
+    intPossibleMultiple = arrNum[0] * loop * arrNum[1];
+    for(j = 2; j < arrNum.length; j++) {
+      if(intPossibleMultiple % arrNum[j] !== 0) {
+        break;
+      }
+    }
+    loop++;
+  } while(j !== arrNum.length);
+  return intPossibleMultiple;
 }
