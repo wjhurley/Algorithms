@@ -1,10 +1,12 @@
 /*Fibonacci sequence that starts with 0 as the first number in the sequence (i.e. 0,1,1...)*/
 function fibonacci(n) {
   var intA = 0, intB = 1, intFib = 1;
-  if(n==0) {return intA;}
-  else if(n==1) {return intB;}
-  else {
-    for(i=2;i<=n;i++) {
+  if(n == 0) {
+    return intA;
+  } else if(n == 1) {
+    return intB;
+  } else {
+    for(var i = 2; i <= n; i++) {
       intFib = intA + intB;
       intA = intB;
       intB = intFib;
@@ -13,8 +15,8 @@ function fibonacci(n) {
   return intFib;
 }
 /*Given an array of objects (contacts), determine if the contact (firstName) exists and if so, determine if the property (prop) exists. If either does not exist, return "No such ..."*/
-function lookUpProfile(firstName, prop){
-  for (i=0; i<contacts.length; i++) {
+function lookUpProfile(contacts, firstName, prop){
+  for (var i = 0; i < contacts.length; i++) {
     if (contacts[i].firstName != firstName) {
       continue;
     } else {
@@ -45,7 +47,7 @@ function factorialize(num) {
 function palindrome(str) {
   var regNonChar = /\W+/g;
   var strNew = str.replace(regNonChar, "").toLowerCase();
-  strNew = strNew.replace("_","");
+  strNew = strNew.replace("_", "");
   var strRev = strNew.split("").reverse().join("");
   if (strNew === strRev) {
     return true;
@@ -57,7 +59,7 @@ function palindrome(str) {
 function findLongestWord(str) {
   var arrStr = str.split(" ");
   var arrStrLength = [];
-  for (i=0; i<arrStr.length; i++) {
+  for (var i = 0; i < arrStr.length; i++) {
     arrStrLength[i] = arrStr[i].length;
   }
   arrStrLength.sort(function(a,b){return b-a;});
@@ -68,9 +70,9 @@ function titleCase(str) {
   var arrStr = str.toLowerCase().split(" ");
   var arrWord = [];
   var arrNewWord = [];
-  for (i = 0; i < arrStr.length; i++) {
+  for (var i = 0; i < arrStr.length; i++) {
     arrWord[i] = arrStr[i].split("");
-    for (j = 0; j < 1; j++) {
+    for (var j = 0; j < 1; j++) {
       arrWord[i][j] = arrWord[i][j].toUpperCase();
       arrNewWord[i] = arrWord[i].join("");
     }
@@ -83,18 +85,18 @@ function largestOfFour(arr) {
   var arrInner = [];
   var arrSorted = [];
   var arrHighest = [];
-  for (i=0;i<arr.length;i++) {
+  for (var i = 0; i < arr.length; i++) {
     arrInner[i] = arr[i];
     arrSorted[i] = arrInner[i].sort(function(a,b){return b-a;});
   }
-  for (i=0;i<arrSorted.length;i++) {
+  for (var i = 0; i < arrSorted.length; i++) {
     arrHighest[i] = arrSorted[i][0];
   }
   return arrHighest;
 }
 /*given 2 string arguments, checks whether argument 1 ends with argument 2*/
 function confirmEnding(str, target) {
-  if (str.substr((str.length-target.length)) == target) {
+  if (str.substr((str.length - target.length)) == target) {
     return true;
   } else {
     return false;
@@ -103,7 +105,7 @@ function confirmEnding(str, target) {
 /*Given 2 arguments, repeat argument 1 by number provided as argument 2*/
 function repeatStringNumTimes(str, num) {
   var strRepeat = "";
-  for (i=1;i<=num;i++) {
+  for (var i = 1; i <= num; i++) {
     strRepeat += str;
   }
   return strRepeat;
@@ -124,8 +126,8 @@ function truncateString(str, num) {
 /*Given an array arr and integer size, return a 2 dimensional array composed of original array broken into groups determined by the size argument*/
 function chunkArrayInGroups(arr, size) {
   var arrGroups = [];
-  for (i = 0; i < arr.length; i+=size) {
-    arrGroups.push(arr.slice(i,(i+size)));
+  for (var i = 0; i < arr.length; i += size) {
+    arrGroups.push(arr.slice(i, (i + size)));
   }
   return arrGroups;
 }
@@ -138,7 +140,7 @@ function slasher(arr, howMany) {
 function mutation(arr) {
   var arrSecondWord = arr[1].toLowerCase().split("");
   var strFirstWord = arr[0].toLowerCase();
-  for (i=0; i<arrSecondWord.length; i++) {
+  for (var i = 0; i < arrSecondWord.length; i++) {
     if (strFirstWord.indexOf(arrSecondWord[i]) == -1) {
       return false;
     } else {
@@ -165,8 +167,8 @@ function destroyer(arr) {
   var arrOriginal = [];
   arrOriginal = arguments[0];
   var arrDestroyer = [];
-  for (i=1; i<arguments.length; i++) {
-    arrDestroyer[i-1] = arguments[i];
+  for (var i = 1; i < arguments.length; i++) {
+    arrDestroyer[i - 1] = arguments[i];
   }
   function filterArray(arg) {
     if (arrDestroyer.indexOf(arg) < 0) {
@@ -194,7 +196,7 @@ function rot13(str) {
   var arrStr = str.split("");
   var arrChar = [];
   var arrDecode = [];
-  for (i=0; i<arrStr.length; i++) {
+  for (var i = 0; i < arrStr.length; i++) {
     arrChar[i] = arrStr[i].replace(/\w/, arrStr[i].charCodeAt(0));
     if (arrChar[i] >= 65 && arrChar[i] <= 77) {
       arrChar[i] = parseInt(arrChar[i]) + 13;
@@ -218,7 +220,7 @@ function rot13(str) {
 function sumAll(arr) {
   var intTotal = 0;
   function reducer(arr1, arr2) {
-    for(i=arr1; i<=arr2; i++) {
+    for(var i = arr1; i <= arr2; i++) {
       intTotal += i;
     }
     return intTotal;
@@ -258,7 +260,7 @@ function convertToRoman(num) {
       case 1:
       case 2:
       case 3:
-        for(j=0; j<parseInt(arg[0]); j++) {
+        for(var j = 0; j < parseInt(arg[0]); j++) {
           strTempRoman += arg[1];
         }
         break;
@@ -272,7 +274,7 @@ function convertToRoman(num) {
       case 7:
       case 8:
         strTempRoman = arg[2];
-        for(k=0; k<(parseInt(arg[0]) - 5); k++) {
+        for(var k = 0; k < (parseInt(arg[0]) - 5); k++) {
           strTempRoman += arg[1];
         }
         break;
@@ -282,11 +284,11 @@ function convertToRoman(num) {
     }
     return arrRomanNum.push(strTempRoman);
   }
-  for(i=0; i<arrNum.length; i++) {
+  for(var i = 0; i < arrNum.length; i++) {
     arrTemp[0] = arrNum[i];
-    arrTemp[1] = arrRoman[(i*2)];
-    arrTemp[2] = arrRoman[(i*2+1)];
-    arrTemp[3] = arrRoman[(i*2+2)];
+    arrTemp[1] = arrRoman[(i * 2)];
+    arrTemp[2] = arrRoman[(i * 2 + 1)];
+    arrTemp[3] = arrRoman[(i * 2 + 2)];
     convertRoman(arrTemp);
   }
   return arrRomanNum.reverse().join('').trimRight();
@@ -296,7 +298,7 @@ function whatIsInAName(collection, source) {
   var arr = [];
   var arrExists = [];
   var arrSource = Object.keys(source);
-  for (var j=0; j<collection.length; j++) {
+  for (var j = 0; j < collection.length; j++) {
     var intCounter = 0;
     for (var name in collection[j]) {
       if (source.hasOwnProperty(name) && source[name] == collection[j][name]) {
@@ -352,7 +354,7 @@ function pairElement(str) {
     arrDNA.push([]);
     arrDNA[index].push(arrStr[index]);
   }
-  for(var i=0; i<arrStr.length; i++) {
+  for(var i = 0; i < arrStr.length; i++) {
     switch(arrStr[i]) {
       case "A":
         arrDNA[i].push("T");
@@ -394,8 +396,8 @@ function booWho(bool) {
 /*Given two or more arrays, returns a new array with unique values from the original arrays, in the order provided*/
 function uniteUnique(arr) {
   var arrUnique = arguments[0];
-  for(var i=1; i<arguments.length; i++) {
-    for(var j=0; j<arguments[i].length; j++) {
+  for(var i = 1; i < arguments.length; i++) {
+    for(var j = 0; j < arguments[i].length; j++) {
       if(arrUnique.indexOf(arguments[i][j]) === -1) {
         arrUnique.push(arguments[i][j]);
       }
@@ -465,14 +467,14 @@ function sumPrimes(num) {
   function addPrimes(previousValue, currentValue) {
     return previousValue + currentValue;
   }
-  while(i<=num) {
+  while(i <= num) {
     var arrDivisors = [];
-    for(var j=1; j<=i; j++) {
-      if(i%j===0) {
+    for(var j = 1; j <= i; j++) {
+      if(i % j === 0) {
         arrDivisors.push(j);
       }
     }
-    if(arrDivisors.length===2) {
+    if(arrDivisors.length === 2) {
       arrPrimes.push(i);
     }
     i++;
@@ -486,7 +488,7 @@ function smallestCommons(arr) {
   arr.sort(function(a, b) {
     return b - a;
   });
-  for(var i = arr[0];i >= arr[1]; i--) {
+  for(var i = arr[0]; i >= arr[1]; i--) {
     arrNum.push(i);
   }
   var loop = 1;
@@ -516,4 +518,48 @@ function dropElements(arr, func) {
     arrReduced = arr.slice(arr.indexOf(arrTrue[0]));
   }
   return arrReduced;
+}
+/*Function takes a nested array and flattens it to a single array with all values*/
+function steamrollArray(arr) {
+  var arrNew = [];
+  function findArray(arg) {
+    if(Array.isArray(arg)) {
+      arg.forEach(findArray);
+    } else {
+      return arrNew.push(arg);
+    }
+  }
+  arr.forEach(findArray);
+  return arrNew;
+}
+/*Function takes a string of space-separated binary numbers and converts it into an English sentence*/
+function binaryAgent(str) {
+  var arrStr = str.split(" ");
+  var arrBinary = [];
+  function convertBinary(arg) {
+    var intTotal = 0;
+    for(var i = 7; i >= 0; i--) {
+      if(arg.charAt(i) == "1") {
+        intTotal += Math.pow(2, 7 - i);
+      }
+    }
+    arrBinary.push(intTotal);
+  }
+  arrStr.forEach(convertBinary);
+  var arrTranslated = arrBinary.map(function(currentValue) {
+    return String.fromCharCode(currentValue);
+  });
+  return arrTranslated.join("");
+}
+/*Function checks if an array of objects (collection) has a property (pre) and if that property has a truthy value*/
+function truthCheck(collection, pre) {
+  function propertyExists(arg) {
+    if(arg[pre]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var arrTruth = collection.filter(propertyExists);
+  return arrTruth.length === collection.length;
 }
