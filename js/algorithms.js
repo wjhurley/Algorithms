@@ -14,6 +14,7 @@ function fibonacci(n) {
   }
   return intFib;
 }
+<<<<<<< HEAD
 /*RECORD COLLECTION - Given a music album collection as a JSON object, the function will take a record (id), property (prop), and value as arguments, update the specified record and return the updated collection. If an empty string is provided as the value, the property will be deleted instead.*/
 
 // Example collection from FCC
@@ -58,6 +59,12 @@ function updateRecords(id, prop, value) {
 function lookUpProfile(firstName, prop){
   for(var i = 0; i < contacts.length; i++) {
     if(contacts[i].firstName != firstName) {
+=======
+/*Given an array of objects (contacts), determine if the contact (firstName) exists and if so, determine if the property (prop) exists. If either does not exist, return "No such ..."*/
+function lookUpProfile(contacts, firstName, prop){
+  for (var i = 0; i < contacts.length; i++) {
+    if (contacts[i].firstName != firstName) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
       continue;
     } else {
       if (contacts[i][prop]) {
@@ -87,7 +94,7 @@ function factorialize(num) {
 function palindrome(str) {
   var regNonChar = /\W+/g;
   var strNew = str.replace(regNonChar, "").toLowerCase();
-  strNew = strNew.replace("_","");
+  strNew = strNew.replace("_", "");
   var strRev = strNew.split("").reverse().join("");
   if(strNew === strRev) {
     return true;
@@ -99,7 +106,11 @@ function palindrome(str) {
 function findLongestWord(str) {
   var arrStr = str.split(" ");
   var arrStrLength = [];
+<<<<<<< HEAD
   for(var i = 0; i < arrStr.length; i++) {
+=======
+  for (var i = 0; i < arrStr.length; i++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     arrStrLength[i] = arrStr[i].length;
   }
   arrStrLength.sort(function(a, b){return b-a;});
@@ -110,9 +121,15 @@ function titleCase(str) {
   var arrStr = str.toLowerCase().split(" ");
   var arrWord = [];
   var arrNewWord = [];
+<<<<<<< HEAD
   for(var i = 0; i < arrStr.length; i++) {
     arrWord[i] = arrStr[i].split("");
     for(var j = 0; j < 1; j++) {
+=======
+  for (var i = 0; i < arrStr.length; i++) {
+    arrWord[i] = arrStr[i].split("");
+    for (var j = 0; j < 1; j++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
       arrWord[i][j] = arrWord[i][j].toUpperCase();
       arrNewWord[i] = arrWord[i].join("");
     }
@@ -125,18 +142,30 @@ function largestOfFour(arr) {
   var arrInner = [];
   var arrSorted = [];
   var arrHighest = [];
+<<<<<<< HEAD
   for(var i = 0; i < arr.length; i++) {
+=======
+  for (var i = 0; i < arr.length; i++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     arrInner[i] = arr[i];
     arrSorted[i] = arrInner[i].sort(function(a, b){return b-a;});
   }
+<<<<<<< HEAD
   for(var i = 0; i < arrSorted.length; i++) {
+=======
+  for (var i = 0; i < arrSorted.length; i++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     arrHighest[i] = arrSorted[i][0];
   }
   return arrHighest;
 }
 /*CONFIRM THE ENDING - Given 2 string arguments, checks whether argument 1 ends with argument 2*/
 function confirmEnding(str, target) {
+<<<<<<< HEAD
   if(str.substr((str.length - target.length)) == target) {
+=======
+  if (str.substr((str.length - target.length)) == target) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     return true;
   } else {
     return false;
@@ -145,7 +174,11 @@ function confirmEnding(str, target) {
 /*REPEAT A STRING REPEAT A STRING - Given 2 arguments, repeat argument 1 by number provided as argument 2*/
 function repeatStringNumTimes(str, num) {
   var strRepeat = "";
+<<<<<<< HEAD
   for(var i = 1; i <= num; i++) {
+=======
+  for (var i = 1; i <= num; i++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     strRepeat += str;
   }
   return strRepeat;
@@ -166,7 +199,11 @@ function truncateString(str, num) {
 /*CHUNKY MONKEY - Given an array arr and integer size, return a 2 dimensional array composed of original array broken into groups determined by the size argument*/
 function chunkArrayInGroups(arr, size) {
   var arrGroups = [];
+<<<<<<< HEAD
   for(var i = 0; i < arr.length; i += size) {
+=======
+  for (var i = 0; i < arr.length; i += size) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     arrGroups.push(arr.slice(i, (i + size)));
   }
   return arrGroups;
@@ -180,8 +217,13 @@ function slasher(arr, howMany) {
 function mutation(arr) {
   var arrSecondWord = arr[1].toLowerCase().split("");
   var strFirstWord = arr[0].toLowerCase();
+<<<<<<< HEAD
   for(var i = 0; i < arrSecondWord.length; i++) {
     if(strFirstWord.indexOf(arrSecondWord[i]) == -1) {
+=======
+  for (var i = 0; i < arrSecondWord.length; i++) {
+    if (strFirstWord.indexOf(arrSecondWord[i]) == -1) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
       return false;
     } else {
       continue;
@@ -207,7 +249,11 @@ function destroyer(arr) {
   var arrOriginal = [];
   arrOriginal = arguments[0];
   var arrDestroyer = [];
+<<<<<<< HEAD
   for(var i = 1; i < arguments.length; i++) {
+=======
+  for (var i = 1; i < arguments.length; i++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     arrDestroyer[i - 1] = arguments[i];
   }
   function filterArray(arg) {
@@ -236,7 +282,11 @@ function rot13(str) {
   var arrStr = str.split("");
   var arrChar = [];
   var arrDecode = [];
+<<<<<<< HEAD
   for(var i = 0; i < arrStr.length; i++) {
+=======
+  for (var i = 0; i < arrStr.length; i++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     arrChar[i] = arrStr[i].replace(/\w/, arrStr[i].charCodeAt(0));
     switch(true) {
       case arrChar[i] >= 65 && arrChar[i] <= 77:
@@ -335,7 +385,11 @@ function whatIsInAName(collection, source) {
   var arr = [];
   var arrExists = [];
   var arrSource = Object.keys(source);
+<<<<<<< HEAD
   for(var j = 0; j < collection.length; j++) {
+=======
+  for (var j = 0; j < collection.length; j++) {
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
     var intCounter = 0;
     for(var name in collection[j]) {
       if(source.hasOwnProperty(name) && source[name] == collection[j][name]) {
@@ -555,7 +609,11 @@ function dropElements(arr, func) {
   }
   return arrReduced;
 }
+<<<<<<< HEAD
 /*STEAMROLLER - Function takes a nested array and flattens it to a single array with all values*/
+=======
+/*Function takes a nested array and flattens it to a single array with all values*/
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
 function steamrollArray(arr) {
   var arrNew = [];
   function findArray(arg) {
@@ -568,7 +626,11 @@ function steamrollArray(arr) {
   arr.forEach(findArray);
   return arrNew;
 }
+<<<<<<< HEAD
 /*BINARY AGENTS - Function takes a string of space-separated binary numbers and converts it into an English sentence*/
+=======
+/*Function takes a string of space-separated binary numbers and converts it into an English sentence*/
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
 function binaryAgent(str) {
   var arrStr = str.split(" ");
   var arrBinary = [];
@@ -587,7 +649,11 @@ function binaryAgent(str) {
   });
   return arrTranslated.join("");
 }
+<<<<<<< HEAD
 /*EVERYTHING BE TRUE - Function checks if an array of objects (collection) has a property (pre) and if that property has a truthy value*/
+=======
+/*Function checks if an array of objects (collection) has a property (pre) and if that property has a truthy value*/
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
 function truthCheck(collection, pre) {
   function propertyExists(arg) {
     if(arg[pre]) {
@@ -599,6 +665,7 @@ function truthCheck(collection, pre) {
   var arrTruth = collection.filter(propertyExists);
   return arrTruth.length === collection.length;
 }
+<<<<<<< HEAD
 /*ARGUMENTS OPTIONAL - Function sums two valid number arguments, but if only one argument provided, returns a function that expects one valid number argument and then returns the sum*/
 function addTogether() {
   var x = arguments[0];
@@ -632,3 +699,5 @@ function telephoneCheck(str) {
   var arrReg = regTel.filter(testRegex);
   return arrReg.length > 0 ? true : false;
 }
+=======
+>>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
