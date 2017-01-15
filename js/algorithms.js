@@ -16,32 +16,33 @@ function fibonacci(n) {
 }
 /*RECORD COLLECTION - Given a music album collection as a JSON object, the function will take a record (id), property (prop), and value as arguments, update the specified record and return the updated collection. If an empty string is provided as the value, the property will be deleted instead.*/
 
-// Example collection from FCC
+// Example album collection
 var collection = {
     "2548": {
-      "album": "Slippery When Wet",
-      "artist": "Bon Jovi",
+      "album": "The Chronic",
+      "artist": "Dr. Dre",
       "tracks": [
-        "Let It Rock",
-        "You Give Love a Bad Name"
+        "Nuthin' But A G Thang",
+        "Let Me Ride"
       ]
     },
     "2468": {
-      "album": "1999",
-      "artist": "Prince",
+      "album": "Doggystyle",
+      "artist": "Snoop Dogg",
       "tracks": [
-        "1999",
-        "Little Red Corvette"
+        "What's My Name",
+        "Ain't No Fun"
       ]
     },
     "1245": {
-      "artist": "Robert Palmer",
+      "artist": "Nirvana",
       "tracks": [ ]
     },
     "5439": {
-      "album": "ABBA Gold"
+      "album": "Hybrid Theory"
     }
 };
+
 function updateRecords(id, prop, value) {
   if(value === "") {
     delete collection[id][prop];
@@ -55,15 +56,38 @@ function updateRecords(id, prop, value) {
   return collection;
 }
 /*PROFILE LOOKUP - Given an array of objects (contacts), determine if the contact (firstName) exists and if so, determine if the property (prop) exists. If either does not exist, return "No such ..."*/
+
+//Example contact list
+var contacts = [
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "number": "4255550123",
+        "likes": ["Pizza", "Coding", "Brownies"]
+    },
+    {
+        "firstName": "Jennifer",
+        "lastName": "Smith",
+        "number": "2062224567",
+        "likes": ["Harry Potter", "Drawing", "Reading"]
+    },
+    {
+        "firstName": "James",
+        "lastName": "Bond",
+        "number": "4255005000",
+        "likes": ["Intriguing Cases", "Violin"]
+    },
+    {
+        "firstName": "Jeff",
+        "lastName": "Malone",
+        "number": "unknown",
+        "likes": ["Javascript", "Gaming", "Node.js"]
+    }
+];
+
 function lookUpProfile(firstName, prop){
   for(var i = 0; i < contacts.length; i++) {
     if(contacts[i].firstName != firstName) {
-=======
-/*Given an array of objects (contacts), determine if the contact (firstName) exists and if so, determine if the property (prop) exists. If either does not exist, return "No such ..."*/
-function lookUpProfile(contacts, firstName, prop){
-  for (var i = 0; i < contacts.length; i++) {
-    if (contacts[i].firstName != firstName) {
->>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
       continue;
     } else {
       if (contacts[i][prop]) {
@@ -638,5 +662,3 @@ function telephoneCheck(str) {
   var arrReg = regTel.filter(testRegex);
   return arrReg.length > 0 ? true : false;
 }
-=======
->>>>>>> 88bc9648d86a84c25bff25daad3e39f9f65adb29
