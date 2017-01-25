@@ -662,3 +662,33 @@ function telephoneCheck(str) {
   var arrReg = regTel.filter(testRegex);
   return arrReg.length > 0 ? true : false;
 }
+/*SYMMETRIC DIFFERENCE - Given two or more arrays, function returns a single array with the symmetric difference of the provided arrays*/
+function sym(args) {
+  var arrArgs = Array.from(arguments);
+  var arrUniqueArgs = [];
+  var arrSymDiffOne = [];
+  var arrSymDiffTwo = [];
+  function findUnique(arg) {
+    if(this.indexOf(arg) >= 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  function makeUnique(arg) {
+    if(this.indexOf(arg) < 0) {
+      this.push(arg);
+    }
+  }
+  for(var j = 0; j < arrArgs.length; j++) {
+    arrUniqueArgs[j] = [];
+    arrArgs[j].forEach(makeUnique, arrUniqueArgs[j]);
+  }
+  arrSymDiffOne = arrUniqueArgs[0];
+  for(var i = 1; i < arrUniqueArgs.length; i++) {
+    arrSymDiffTwo = arrSymDiffOne;
+    arrSymDiffOne = arrSymDiffOne.filter(findUnique, arrUniqueArgs[i]);
+    arrSymDiffOne = arrSymDiffOne.concat(arrUniqueArgs[i].filter(findUnique, arrSymDiffTwo));
+  }
+  return arrSymDiffOne;
+}
