@@ -723,7 +723,6 @@ function checkCashRegister(price, cash, cid) {
       change -= curr.val;
       register[curr.name] -= curr.val;
       value += curr.val;
-      console.log(change);
       change = Math.round(change * 100) / 100;
     }
     if(value > 0) {
