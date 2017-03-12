@@ -14,6 +14,31 @@ function fibonacci(n) {
   }
   return intFib;
 }
+/*NOT A CHALLENGE ON FCC - Given a zero-indexed array A of integers, returns an equilibrium index. The function will return -1 if no equilibrium index exists. First or last indices can be considered an equilibrium index if the sum of all other indices equal to 0.*/
+function solution(A) {
+  var firstIndexArray = A.slice(0, (A.length - 1)),
+    lastIndex = firstIndexArray.reduce(reducer, 0),
+    lastIndexArray = A.slice(1),
+    firstIndex = lastIndexArray.reduce(reducer, 0);
+  function reducer(acc, val) {
+    return acc + val;
+  }
+  if(firstIndex === 0) {
+    return 0;
+  } else if(lastIndex === 0) {
+    return A.length - 1;
+  }
+  for(let i = 1; i < A.length; i++) {
+    let arrLeft = A.slice(0, i),
+      arrRight = A.slice(i + 1),
+      intLeft = arrLeft.reduce(reducer, 0),
+      intRight = arrRight.reduce(reducer, 0);
+    if(intLeft === intRight) {
+      return i;
+    }
+  }
+  return -1;
+}
 /*RECORD COLLECTION - Given a music album collection as a JSON object, the function will take a record (id), property (prop), and value as arguments, update the specified record and return the updated collection. If an empty string is provided as the value, the property will be deleted instead.*/
 
 // Example album collection
