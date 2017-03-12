@@ -15,7 +15,7 @@ function fibonacci(n) {
   return intFib;
 }
 /*NOT A CHALLENGE ON FCC - Given a zero-indexed array A of integers, returns an equilibrium index. The function will return -1 if no equilibrium index exists. First or last indices can be considered an equilibrium index if the sum of all other indices equal to 0.*/
-function solution(A) {
+function equilibriumIndex(A) {
   var firstIndexArray = A.slice(0, (A.length - 1)),
     lastIndex = firstIndexArray.reduce(reducer, 0),
     lastIndexArray = A.slice(1),
