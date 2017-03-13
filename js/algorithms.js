@@ -1,9 +1,9 @@
 /*NOT A CHALLENGE ON FCC - Fibonacci sequence that starts with 0 as the first number in the sequence (i.e. 0,1,1...)*/
 function fibonacci(n) {
   var intA = 0, intB = 1, intFib = 1;
-  if(n == 0) {
+  if(n === 0) {
     return intA;
-  } else if(n == 1) {
+  } else if(n === 1) {
     return intB;
   } else {
     for(var i = 2; i <= n; i++) {
@@ -38,6 +38,23 @@ function equilibriumIndex(A) {
     }
   }
   return -1;
+}
+/*NOT A CHALLENGE ON FCC - Given a positive number N, the function returns the length of the longest binary gap (zeroes surrounded by ones on both sides). Returns 0 if N doesn't contain a binary gap.*/
+function binaryGap(N) {
+    var binary = (N >>> 0).toString(2),
+        regBinaryGap = /1[0]+1/g,
+        arrBinary = [];
+    for(let i = 0; i < binary.length; i++) {
+      let binarySub = binary.substr(i);
+      if(binarySub.search(regBinaryGap) !== -1) {
+        arrBinary.push(binarySub.match(regBinaryGap)[0]);
+      }
+    }
+    var arrBinarySorted = arrBinary.sort(function(a, b) {return b.length - a.length}),
+        largestBinaryGap = arrBinarySorted[0]
+        ? arrBinarySorted[0].substring(1, arrBinarySorted[0].length - 1).length
+        : 0;
+    return largestBinaryGap;
 }
 /*RECORD COLLECTION - Given a music album collection as a JSON object, the function will take a record (id), property (prop), and value as arguments, update the specified record and return the updated collection. If an empty string is provided as the value, the property will be deleted instead.*/
 
