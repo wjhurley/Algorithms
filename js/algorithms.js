@@ -14,47 +14,56 @@ function fibonacci(n) {
   }
   return intFib;
 }
-/*NOT A CHALLENGE ON FCC - Given a zero-indexed array A of integers, returns an equilibrium index. The function will return -1 if no equilibrium index exists. First or last indices can be considered an equilibrium index if the sum of all other indices equal to 0.*/
+/*CODILITY CHALLENGE - Given a zero-indexed array A of integers, returns an equilibrium index. The function will return -1 if no equilibrium index exists. First or last indices can be considered an equilibrium index if the sum of all other indices equal to 0.*/
 function equilibriumIndex(A) {
-  var firstIndexArray = A.slice(0, (A.length - 1)),
-    lastIndex = firstIndexArray.reduce(reducer, 0),
-    lastIndexArray = A.slice(1),
-    firstIndex = lastIndexArray.reduce(reducer, 0);
-  function reducer(acc, val) {
-    return acc + val;
+  var sum,
+      sumRight,
+      sumLeft = 0;
+  if(!A || A.length === 0) {
+    return -1;
+  } else if(A.length === 1) {
+    sum = A[0];
+  } else {
+    sum = A.reduce(function(prev, curr) {
+      return prev + curr;
+    });
   }
-  if(firstIndex === 0) {
-    return 0;
-  } else if(lastIndex === 0) {
-    return A.length - 1;
-  }
-  for(let i = 1; i < A.length; i++) {
-    let arrLeft = A.slice(0, i),
-      arrRight = A.slice(i + 1),
-      intLeft = arrLeft.reduce(reducer, 0),
-      intRight = arrRight.reduce(reducer, 0);
-    if(intLeft === intRight) {
+  for(var i = 0; i < A.length; i++) {
+    sumRight = sum - sumLeft - A[i];
+    if(sumLeft === sumRight) {
       return i;
     }
+    sumLeft += A[i];
   }
   return -1;
 }
-/*NOT A CHALLENGE ON FCC - Given a positive number N, the function returns the length of the longest binary gap (zeroes surrounded by ones on both sides). Returns 0 if N doesn't contain a binary gap.*/
+/*CODILITY CHALLENGE - Given a positive number N, the function returns the length of the longest binary gap (zeroes surrounded by ones on both sides). Returns 0 if N doesn't contain a binary gap.*/
 function binaryGap(N) {
-    var binary = (N >>> 0).toString(2),
-        regBinaryGap = /1[0]+1/g,
-        arrBinary = [];
-    for(let i = 0; i < binary.length; i++) {
-      let binarySub = binary.substr(i);
-      if(binarySub.search(regBinaryGap) !== -1) {
-        arrBinary.push(binarySub.match(regBinaryGap)[0]);
+  var binary = (N >>> 0).toString(2),
+      regBinaryGap = /1[0]+1/g,
+      arrBinary = [];
+  for(let i = 0; i < binary.length; i++) {
+    let binarySub = binary.substr(i);
+    if(binarySub.search(regBinaryGap) !== -1) {
+      arrBinary.push(binarySub.match(regBinaryGap)[0]);
+    }
+  }
+  var arrBinarySorted = arrBinary.sort(function(a, b) {return b.length - a.length}),
+      largestBinaryGap = arrBinarySorted[0]
+      ? arrBinarySorted[0].substring(1, arrBinarySorted[0].length - 1).length
+      : 0;
+  return largestBinaryGap;
+}
+/*CODILITY CHALLENGE - Given an array with an odd number of elements and each element's value matches another except one, returns the value of the non-matching element*/
+function oddOccurrencesInArray(A) {
+  A.sort(function(a, b) {return a - b});
+  for(var i = 0; i < A.length; i += 2) {
+    if(A[i] !== A[i + 1] || A[i] === A[A.length - 1]) {
+      if(A[i + 1] === A[i + 2] || A[i - 1] === A[i - 2]) {
+        return A[i];
       }
     }
-    var arrBinarySorted = arrBinary.sort(function(a, b) {return b.length - a.length}),
-        largestBinaryGap = arrBinarySorted[0]
-        ? arrBinarySorted[0].substring(1, arrBinarySorted[0].length - 1).length
-        : 0;
-    return largestBinaryGap;
+  }
 }
 /*RECORD COLLECTION - Given a music album collection as a JSON object, the function will take a record (id), property (prop), and value as arguments, update the specified record and return the updated collection. If an empty string is provided as the value, the property will be deleted instead.*/
 
