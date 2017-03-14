@@ -54,7 +54,7 @@ function binaryGap(N) {
       : 0;
   return largestBinaryGap;
 }
-/*CODILITY CHALLENGE - Given an array with an odd number of elements and each element's value matches another except one, returns the value of the non-matching element*/
+/*CODILITY CHALLENGE - Given an array with an odd number of elements and each element's value matches another except one, returns the value of the non-matching element.*/
 function oddOccurrencesInArray(A) {
   A.sort(function(a, b) {return a - b});
   for(var i = 0; i < A.length; i += 2) {
@@ -64,6 +64,21 @@ function oddOccurrencesInArray(A) {
       }
     }
   }
+}
+/*CODILITY CHALLENGE - Given an array A of integers, the function shifts the array to the right K times, with the last elements moving to the beginning.*/
+function cyclicRotation(A, K) {
+    // write your code in JavaScript (Node.js 6.4.0)
+    var slicer = K > A.length
+        ? -(K % A.length)
+        : -K,
+        arrRotate,
+        arrNew;
+    if(K === 0 || A.length === K) {
+      return A;
+    }
+    arrRotate = A.splice(slicer);
+    arrNew = arrRotate.concat(A);
+    return arrNew;
 }
 /*RECORD COLLECTION - Given a music album collection as a JSON object, the function will take a record (id), property (prop), and value as arguments, update the specified record and return the updated collection. If an empty string is provided as the value, the property will be deleted instead.*/
 
