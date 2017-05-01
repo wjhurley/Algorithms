@@ -719,3 +719,43 @@ function checkCashRegister(price, cash, cid) {
   }
   return arrChange;
 }
+/*INVENTORY UPDATE - Given 2D arrays of current inventory and new inventory, combine the totals from both arrays for items already in the current inventory or add the item and total amount if not in the current inventory.*/
+
+// Example inventory lists
+var curInv = [
+    [21, "Bowling Ball"],
+    [2, "Dirty Sock"],
+    [1, "Hair Pin"],
+    [5, "Microphone"]
+];
+
+var newInv = [
+    [2, "Hair Pin"],
+    [3, "Half-Eaten Apple"],
+    [67, "Bowling Ball"],
+    [7, "Toothpaste"]
+];
+
+function updateInventory(arr1, arr2) {
+    // Create new array rather than a reference to original array as updatedInv = arr1 would create
+    var updatedInv = Array.from(arr1);
+    for(var i = 0; i < arr2.length; i++) {
+      var count = 0;
+      for(var j = 0; j < arr1.length; j++) {
+        // If the item from arr2 is found in arr1, add the inventory amounts
+        if(arr1[j][1] === arr2[i][1]) {
+          arr1[j][0] += arr2[i][0];
+          count++;
+        }
+      }
+      // If the item from arr2 is not found in arr1, push item to updatedInv
+      if(count === 0) {
+        updatedInv.push(arr2[i]);
+      }
+    }
+    function compare(prev, next) {
+      return prev[1] > next[1] ? 1 : -1;
+    }
+    updatedInv.sort(compare);
+    return updatedInv;
+}
