@@ -1,5 +1,8 @@
-function convert() {
-  var intDecimal = document.getElementById("decimalNum").value;
-  var lblRomanNum = document.getElementById("romanNum");
-  lblRomanNum.innerHTML = convertToRoman(intDecimal);
-}
+'use strict';
+
+var convertButton = document.querySelector('#convert-to-roman');
+convertButton.addEventListener('click', function convert() {
+  var decimalNum = Number(document.querySelector('#decimalNum').value);
+  var lblRomanNum = document.querySelector('#romanNum');
+  lblRomanNum.innerHTML = convertToRoman(decimalNum);
+}, true);
