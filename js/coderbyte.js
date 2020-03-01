@@ -39,3 +39,76 @@ function QuestionsMarks(str) {
 
   return flag;
 }
+// Given a string of only alpha characters, return a string with those characters
+// sorted in alphabetical order.
+function AlphabetSoup(str) { 
+  return str.split('')
+    .sort((a, b) => {
+      return a.localeCompare(b);
+    })
+    .join(''); 
+}
+// Given a postive integer, return the factorial (the product of the integer and
+// all integers below it).
+function FirstFactorial(num) { 
+  let total = 1;
+
+  for (let i = 1; i <= num; i++) {
+    total *= i;
+  }
+
+  return total;
+}
+// Given a string, return the string in reversed order
+function FirstReverse(str) { 
+  return str.split('').reverse().join('');
+}
+// Given a string, replace every letter with the next letter in the alphabet,
+// regardless of casing ('z' becomes 'a'). Then return the new string with
+// every vowel capitalized (capital vowels remain the same).
+function LetterChanges(str) {
+  // Create constants needed for shifting 'z' to 'a'
+  const aUpperCharCode = 65;
+  const zUpperCharCode = 90;
+  const aLowerCharCode = 97;
+  const zLowerCharCode = 122;
+
+  return str.split('')
+    .map(char => {
+      const charCode = char.charCodeAt();
+      let tempChar = '';
+
+      if ( (charCode < aUpperCharCode || charCode > zUpperCharCode)
+        && (charCode < aLowerCharCode || charCode > zLowerCharCode)
+      ) {
+        tempChar = char;
+      } else if (charCode === zUpperCharCode) {
+        tempChar = String.fromCharCode(aUpperCharCode);
+      } else if (charCode ===zLowerCharCode) {
+        tempChar = String.fromCharCode(aLowerCharCode);
+      } else {
+        tempChar = String.fromCharCode(charCode + 1);
+      }
+
+      return tempChar;
+    })
+    .join('')
+    .replace(/[aeiou]/g, match => match.toUpperCase());
+}
+// Given a string, return the longest word. If there are two or more words with
+// the same length, return the first word from the string with that length.
+function LongestWord(sen) {
+  const regex = /[^a-z0-9]/gi;
+  const sortedArray = sen.split(' ')
+    .sort((a, b) => {
+      const strippedA = a.replace(regex, '');
+      const strippedB = b.replace(regex, '');
+      if (strippedA.length === strippedB.length) {
+        return -1;
+      }
+
+      return strippedB.length - strippedA.length;
+    });
+
+  return sortedArray[0];
+}
