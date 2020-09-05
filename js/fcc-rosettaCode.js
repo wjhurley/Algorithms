@@ -8,25 +8,21 @@
  * @returns {number[]} Array of door numbers for the doors that are open after the final pass
  */
 function getFinalOpenedDoors(numDoors) {
-  let doors = Array(numDoors + 1).fill(false);
+    let doors = Array(numDoors + 1).fill(false);
 
-  for (let i = 1; i <= 100; i++) {
-    doors = doors.map((door, index) => {
-      return index % i ? door : !door;
-    });
-  }
+    for (let i = 1; i <= 100; i++) {
+        doors = doors.map((door, index) => index % i ? door : !door);
+    }
 
-  const lastPassDoors = doors
-    .map((door, index) => {
-      return door ? index : door;
-    })
-    .filter((door, index) => {
-      if (index === 0) {
-        return false;
-      }
+    const lastPassDoors = doors
+        .map((door, index) => door ? index : door)
+        .filter((door, index) => {
+            if (index === 0) {
+                return false;
+            }
 
-      return door;
-    });
+            return door;
+        });
 
-  return lastPassDoors;
+    return lastPassDoors;
 }
