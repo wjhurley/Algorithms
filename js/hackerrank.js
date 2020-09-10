@@ -103,3 +103,33 @@ function repeatedString(s, n) {
 
     return numAInString * (repeatsRequired - 1) + numAInLastRepeat;
 }
+
+/**
+ * https://www.hackerrank.com/challenges/new-year-chaos
+ *
+ * @param {number[]} q - Array of integers representing queue
+ * @returns {number | string} The number of bribes needed and possibly an error message
+ */
+function minimumBribes(q) {
+    let swaps = 0;
+
+    for (let i = 0; i < q.length; i++) {
+        let bribes = q[i] - (i + 1);
+        let maxAdvance = q[i] - 2 > 0 ? q[i] - 2 : 0;
+
+        if (bribes > 2) {
+            // console.log AND return used here and below because challenge expects console.log rather than returned value
+            console.log('Too chaotic');
+            return 'Too chaotic';
+        }
+
+        for (let j = maxAdvance; j < i; j++) {
+            if (q[j] > q[i]) {
+                swaps++;
+            }
+        }
+    }
+
+    console.log(swaps);
+    return swaps;
+}
