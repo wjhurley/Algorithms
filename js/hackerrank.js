@@ -133,3 +133,29 @@ function minimumBribes(q) {
     console.log(swaps);
     return swaps;
 }
+/**
+ * https://www.hackerrank.com/challenges/minimum-swaps-2
+ *
+ * @param {number[]} arr - Array of integers to sort
+ * @returns {number} The number of swaps required to sort the array in ascending order
+ */
+function minimumSwaps(arr) {
+    return arr.reduce((swaps, value, index, arrCopy) => {
+        let location = 0;
+
+        if (value === index + 1) {
+            return swaps;
+        }
+
+        for (let i = index; i < arrCopy.length; i++) {
+            if (arrCopy[i] === index + 1) {
+                location = i;
+                break;
+            }
+        }
+
+        arrCopy[location] = arrCopy[index];
+        arrCopy[index] = index + 1;
+        return ++swaps;
+    }, 0);
+}
