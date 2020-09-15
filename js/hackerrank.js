@@ -159,3 +159,37 @@ function minimumSwaps(arr) {
         return ++swaps;
     }, 0);
 }
+
+/**
+ * https://www.hackerrank.com/challenges/crush
+ *
+ * @param {number} n - The length of the array of zeroes
+ * @param {(number[])[]} queries - Two-dimensional array of numbers indicating a starting index, ending index, and number to add to each array value, respectively
+ * @returns {number} The maximum value in the array after modifications
+ */
+function arrayManipulation(n, queries) {
+    const arr = Array(n + 1);
+    let maxValue = 0;
+    let currentNumber = 0;
+
+    queries.forEach(([start, end, value]) => {
+        arr[start] = arr[start] || { start: 0, end: 0 };
+        arr[end] = arr[end] || { start: 0, end: 0 };
+        arr[start].start += value;
+        arr[end].end += value;
+    });
+
+    arr.forEach(({ start, end }) => {
+        if (start || end) {
+            currentNumber += start;
+
+            if (currentNumber > maxValue) {
+                maxValue = currentNumber;
+            }
+
+            currentNumber -= end;
+        }
+    });
+
+    return maxValue;
+}
