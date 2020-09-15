@@ -133,6 +133,7 @@ function minimumBribes(q) {
     console.log(swaps);
     return swaps;
 }
+
 /**
  * https://www.hackerrank.com/challenges/minimum-swaps-2
  *
@@ -192,4 +193,34 @@ function arrayManipulation(n, queries) {
     });
 
     return maxValue;
+}
+
+/**
+ * https://www.hackerrank.com/challenges/2d-array
+ *
+ * @param {(number[])[]} arr - 6x6 two-dimensional array
+ * @returns {number} The maximum value achieved by adding an hourglass subset
+ */
+function hourglassSum(arr) {
+    const hourglasses = [];
+
+    arr.forEach((row, index) => {
+        if (index > 3) {
+            return;
+        }
+
+        for (let i = 0; i < 4; i++) {
+            const hourglass = [];
+            hourglass.push(arr[index][i]);
+            hourglass.push(arr[index][i + 1]);
+            hourglass.push(arr[index][i + 2]);
+            hourglass.push(arr[index + 1][i + 1]);
+            hourglass.push(arr[index + 2][i]);
+            hourglass.push(arr[index + 2][i + 1]);
+            hourglass.push(arr[index + 2][i + 2]);
+            hourglasses.push(hourglass.reduce((acc, curr) => acc + curr, 0));
+        }
+    });
+
+    return Math.max(...hourglasses);
 }
