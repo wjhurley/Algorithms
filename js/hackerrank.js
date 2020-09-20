@@ -224,3 +224,28 @@ function hourglassSum(arr) {
 
     return Math.max(...hourglasses);
 }
+
+/**
+ * https://www.hackerrank.com/challenges/ctci-making-anagrams
+ *
+ * @param {string} a - First string used to form anagram
+ * @param {string} b - Second string used to form anagram
+ * @returns {number} The minimum amount of characters that must be deleted to form an anagram with the provided parameters
+ */
+function makeAnagram(a, b) {
+    const arrA = a.split('');
+    const arrB = b.split('');
+    let lettersRemaining = [];
+
+    arrA.forEach(letter => {
+        for (let i = 0; i < arrB.length; i++) {
+            if (letter === arrB[i]) {
+                arrB.splice(i, 1);
+                lettersRemaining.push(letter);
+                break;
+            }
+        }
+    });
+
+    return arrA.length - lettersRemaining.length + arrB.length;
+}
