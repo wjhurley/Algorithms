@@ -249,3 +249,23 @@ function makeAnagram(a, b) {
 
     return arrA.length - lettersRemaining.length + arrB.length;
 }
+
+/**
+ * https://www.hackerrank.com/challenges/alternating-characters
+ *
+ * @param {string} s - string of characters made up of zero or more A's and B's, i.e. AABBAB
+ * @returns {number} The number of characters deleted to make input string have no adjacent characters
+ */
+function alternatingCharacters(s) {
+    const alternatingString = s
+        .split('')
+        .filter((letter, index, arr) => {
+            if (index === 0) {
+                return true;
+            }
+
+            return letter !== arr[index - 1];
+        });
+
+    return s.length - alternatingString.length;
+}
