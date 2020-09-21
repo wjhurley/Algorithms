@@ -235,37 +235,84 @@ function hourglassSum(arr) {
 function makeAnagram(a, b) {
     const arrA = a.split('');
     const arrB = b.split('');
-    let lettersRemaining = [];
+    let charactersRemaining = [];
 
-    arrA.forEach(letter => {
+    arrA.forEach(character => {
         for (let i = 0; i < arrB.length; i++) {
-            if (letter === arrB[i]) {
+            if (character === arrB[i]) {
                 arrB.splice(i, 1);
-                lettersRemaining.push(letter);
+                charactersRemaining.push(character);
                 break;
             }
         }
     });
 
-    return arrA.length - lettersRemaining.length + arrB.length;
+    return arrA.length - charactersRemaining.length + arrB.length;
 }
 
 /**
  * https://www.hackerrank.com/challenges/alternating-characters
  *
- * @param {string} s - string of characters made up of zero or more A's and B's, i.e. AABBAB
+ * @param {string} s - String of characters made up of zero or more A's and B's, i.e. AABBAB
  * @returns {number} The number of characters deleted to make input string have no adjacent characters
  */
 function alternatingCharacters(s) {
     const alternatingString = s
         .split('')
-        .filter((letter, index, arr) => {
+        .filter((character, index, arr) => {
             if (index === 0) {
                 return true;
             }
 
-            return letter !== arr[index - 1];
+            return character !== arr[index - 1];
         });
 
     return s.length - alternatingString.length;
+}
+
+/**
+ * https://www.hackerrank.com/challenges/sherlock-and-valid-string
+ *
+ * @param {string} s - String of characters to check for validity according to challenge
+ * @returns {string} 'YES' or 'NO' to indicate if the input string meets the validity checks
+ */
+function isValid(s) {
+    let baseline = 0;
+    let loneCharacters = 0;
+    let removals = 0;
+    const characters = s
+        .split('')
+        .reduce((obj, character) => {
+            if (!Object.prototype.hasOwnProperty.call(obj, character)) {
+                obj[character] = 1;
+            } else {
+                obj[character]++;
+            }
+
+            return obj;
+        }, {});
+
+    for (const character in characters) {
+        const variance = Math.abs(baseline - characters[character]);
+        const isLoneCharacter = loneCharacters === 0 && characters[character] === 1;
+
+        if (isLoneCharacter) {
+            loneCharacters++;
+        }
+
+        if (baseline === 0) {
+            baseline = characters[character];
+            continue;
+        }
+
+        if (variance === 1) {
+            removals++;
+        }
+
+        if ((variance > 1 && !isLoneCharacter) || removals > 1) {
+            return 'NO';
+        }
+    }
+
+    return 'YES';
 }
