@@ -96,11 +96,8 @@ function calculator(str) {
         ['+', '-'],
     ];
 
-    for (let i = 0; i < allOperators.length; i++) {
-        const operators = allOperators[i];
-
-        for (let j = 0; j < characters.length; j++) {
-            const character = characters[j];
+    for (const operators of allOperators) {
+        for (const [i, character] of characters.entries()) {
             let result = 0;
 
             if (!operators.includes(character)) {
@@ -109,20 +106,20 @@ function calculator(str) {
 
             switch (character) {
                 case '*':
-                    result = characters[j - 1] * characters[j + 1];
-                    characters.splice(j - 1, 3, result);
+                    result = characters[i - 1] * characters[i + 1];
+                    characters.splice(i - 1, 3, result);
                     break;
                 case '/':
-                    result = characters[j - 1] / characters[j + 1];
-                    characters.splice(j - 1, 3, result);
+                    result = characters[i - 1] / characters[i + 1];
+                    characters.splice(i - 1, 3, result);
                     break;
                 case '+':
-                    result = characters[j - 1] + characters[j + 1];
-                    characters.splice(j - 1, 3, result);
+                    result = characters[i - 1] + characters[i + 1];
+                    characters.splice(i - 1, 3, result);
                     break;
                 case '-':
-                    result = characters[j - 1] - characters[j + 1];
-                    characters.splice(j - 1, 3, result);
+                    result = characters[i - 1] - characters[i + 1];
+                    characters.splice(i - 1, 3, result);
                     break;
             }
 
