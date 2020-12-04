@@ -1,21 +1,6 @@
 import * as MORSE_CODE from './constants/MorseCode';
 
 export class CodeWars {
-    // https://www.codewars.com/kata/554e4a2f232cdd87d9000038
-    public static dnaComplements = (dna: string): string => {
-        const replacer = (m: string, p1: string, p2: string, p3: string, p4: string): string => {
-            return m === p1
-                ? 'T'
-                : m === p2
-                    ? 'A'
-                    : m === p3
-                        ? 'G'
-                        : m === p4
-                            ? 'C'
-                            : '';
-        };
-        return dna.replace(/([A])|([T])|([C])|([G])/gi, replacer);
-    }
     // https://www.codewars.com/kata/54b724efac3d5402db00065e
     public static decodeMorse = (morseCode: string): string => {
         const wordArray: string[] = morseCode.trim().split('   ');
@@ -32,6 +17,21 @@ export class CodeWars {
 
         return convertedWords.join(' ');
     }
+    // https://www.codewars.com/kata/554e4a2f232cdd87d9000038
+    public static dnaComplements = (dna: string): string => {
+        const replacer = (m: string, p1: string, p2: string, p3: string, p4: string): string => {
+            return m === p1
+                ? 'T'
+                : m === p2
+                    ? 'A'
+                    : m === p3
+                        ? 'G'
+                        : m === p4
+                            ? 'C'
+                            : '';
+        };
+        return dna.replace(/([A])|([T])|([C])|([G])/gi, replacer);
+    }
     // https://www.codewars.com/kata/5663f5305102699bad000056
     public static maxDiffLength = (a1: string[], a2: string[]): number => {
         if (a1.length === 0 || a2.length === 0) {
@@ -47,6 +47,10 @@ export class CodeWars {
 
         return Math.max(maxWithA1Shortest, maxWithA2Shortest);
     }
+    // https://www.codewars.com/kata/moves-in-squared-strings-i/
+    public static mirrorStrings = (fct: (string) => string, s: string) => {
+        return fct(s);
+    }
     // https://www.codewars.com/kata/550498447451fbbd7600041c
     public static squareDigits(num: number) {
         const numberArray: string[] = num.toString().split('');
@@ -59,10 +63,31 @@ export class CodeWars {
       
         return Number(numberString);
     }
-    /* https://www.codewars.com/kata/moves-in-squared-strings-i/
-    *  vertMirror and horMirror are private and only called from
-    *  mirrorStrings(), which are passed in as the first parameter.
+    // https://www.codewars.com/kata/56eb0be52caf798c630013c0
+    public static unluckyDays(year: number): number {
+        let blackFridays = 0;
+    
+        for (let i = 1; i <= 12; i++) {
+            const thirteenthDay = new Date(`${year}-${i}-13 00:00:00`).getDay();
+    
+            if (thirteenthDay === 5) {
+                blackFridays++;
+            }
+        }
+    
+        return blackFridays;
+    }
+    /**
+    * horMirror and vertMirror are private and only called from
+    * mirrorStrings(), which are passed in as the first parameter.
     */
+    private static horMirror = (strng: string): string => {
+        return strng
+            .split('\n')
+            .reverse()
+            .join('\n');
+    }
+
     private static vertMirror = (strng: string): string => {
         return strng
             .split('\n')
@@ -71,15 +96,8 @@ export class CodeWars {
                     .split('')
                     .reverse()
                     .join('');
-            }).join('\n');
-    }
-
-    private static horMirror = (strng: string): string => {
-        return strng.split('\n').reverse().join('\n');
-    }
-
-    public static mirrorStrings = (fct: (string) => string, s: string) => {
-        return fct(s);
+            })
+            .join('\n');
     }
 }
 
