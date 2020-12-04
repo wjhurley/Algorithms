@@ -156,3 +156,49 @@ function blackFriday(year) {
 
     return firstThursday + threeWeeksOneDay;
 }
+/**
+ * Helper function for findPosition() below.
+ *
+ * @param {number} num - The number to start the infinite string at.
+ * @returns {[string, number]} - A section of the infinite string and the offset for the section.
+ */
+function * generateInfiniteString(num) {
+    let start = num;
+    let str = '';
+    let offset = 0;
+    let loopEnd = 35;
+    let isFirstIteration = true;
+
+    while (true) {
+        for (let i = 0; i < loopEnd; i++) {
+            str += '' + start;
+            start++;
+        }
+
+        if (!isFirstIteration) {
+            let leftovers = start.toString().length * loopEnd;
+            let len = str.length - leftovers;
+            offset += len;
+            str = str.slice(-leftovers);
+        }
+
+        isFirstIteration = false;
+        yield [str, offset];
+    }
+}
+/**
+ * https://www.codewars.com/kata/582c1092306063791c000c00/train/javascript
+ *
+ * @param {string} num - The section of the infinite string to find.
+ * @returns {number} - The starting index in the infinite string for the section passed in as a parameter.
+ */
+function findPosition(num) {
+    const generator = generateInfiniteString(1);
+    let [infiniteString, offset] = generator.next().value;
+
+    while (infiniteString.indexOf(num) < 0) {
+        [infiniteString, offset] = generator.next().value;
+    }
+
+    return infiniteString.indexOf(num) + offset;
+}
