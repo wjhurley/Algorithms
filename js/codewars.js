@@ -176,10 +176,30 @@ function tickets(peopleInLine) {
     return isChangeAvailable ? 'YES' : 'NO';
 }
 /**
- * Helper function for findPosition() below.
+ * https://www.codewars.com/kata/582c1092306063791c000c00
+ *
+ * @param {string} num - The section of the infinite string to find.
+ * @returns {number} The starting index in the infinite string for the section passed in as a parameter.
+ */
+function findPosition(num) {
+    const generator = generateInfiniteString(1);
+    let [infiniteString, removed] = generator.next().value;
+
+    if (infiniteString.indexOf(num) < 0 && num.length > 6) {
+        return findPosition2(num);
+    }
+
+    while (infiniteString.indexOf(num) < 0) {
+        [infiniteString, removed] = generator.next().value;
+    }
+
+    return infiniteString.indexOf(num) + removed;
+}
+/**
+ * Helper function for findPosition()
  *
  * @param {number} num - The number to start the infinite string at.
- * @returns {[string, number]} - A section of the infinite string and the offset for the section.
+ * @returns {Generator<[string, number]>} A section of the infinite string and the offset for the section.
  */
 function * generateInfiniteString(num) {
     let start = num;
@@ -195,8 +215,8 @@ function * generateInfiniteString(num) {
         }
 
         if (!isFirstIteration) {
-            let leftovers = start.toString().length * loopEnd;
-            let len = str.length - leftovers;
+            const leftovers = start.toString().length * (loopEnd + 5);
+            const len = str.length - leftovers;
             offset += len;
             str = str.slice(-leftovers);
         }
@@ -206,18 +226,139 @@ function * generateInfiniteString(num) {
     }
 }
 /**
- * https://www.codewars.com/kata/582c1092306063791c000c00
+ * Helper function for findPosition()
  *
- * @param {string} num - The section of the infinite string to find.
- * @returns {number} - The starting index in the infinite string for the section passed in as a parameter.
+ * @param {number} digitsLength - the number of digits to determine the starting index
+ * @returns {number} The index for the first number of that length (factor of 10)
  */
-function findPosition(num) {
-    const generator = generateInfiniteString(1);
-    let [infiniteString, offset] = generator.next().value;
+function firstIndexForFactorOf10(digitsLength) {
+    const base = 9;
+    let total = 0;
 
-    while (infiniteString.indexOf(num) < 0) {
-        [infiniteString, offset] = generator.next().value;
+    for (let i = 1; i < digitsLength; i++) {
+        total += base * (i * 10 ** (i - 1));
     }
 
-    return infiniteString.indexOf(num) + offset;
+    return total;
+}
+/**
+ * Helper function for findPosition()
+ *
+ * @param {string} num - The originating string of numbers to manipulate
+ * @returns {string[]} An array of cyclic permutations for the given numeric string
+ */
+function getLowerCyclicPermutations(num) {
+    const nines = num.match(/^9*/)[0];
+    const numbers = num.split('');
+    const length = num.length;
+    const cyclicPermutations = numbers.reduce((perms, curr, ix, nums) => {
+        const firstNum = nums.shift();
+        nums.push(firstNum);
+        const newNum = nums.join('');
+        // Numbers starting in 9's can be sneaky, e.g. 965 in 649650
+        if (nines !== '' && ix === nines.length - 1) {
+            const sneakyNum = Number(newNum) - Number(nines);
+            perms.push(sneakyNum.toString());
+        }
+
+        for (let i = 1; i <= nums.length; i++) {
+            perms.push(newNum.substring(0, i));
+        }
+
+        return perms;
+    }, []);
+
+    const ouroborosNumbers = getOuroborosNumbers(num);
+    // Add additional numbers to check for numbers beginning and ending with the same number
+    if (ouroborosNumbers > 0) {
+        const extraPermutations = numbers
+            .slice(0, length - ouroborosNumbers)
+            .reduce((perms, curr, ix, nums) => {
+                const firstNum = nums.shift();
+                nums.push(firstNum);
+                const newNum = nums.join('');
+                perms.push(newNum);
+
+                return perms;
+            }, []);
+        cyclicPermutations.push(...extraPermutations);
+    }
+
+    return cyclicPermutations.sort((a, b) => Number(a) - Number(b));
+}
+/**
+ * Helper function for findPosition()
+ *
+ * @param {string} num - The numeric string to check for beginning and ending numbers that are the same or one off of each other
+ * @returns {number} The number of characters that match (or are one number off) at the beginning and end of the string
+ */
+function getOuroborosNumbers(num) {
+    const length = num.length;
+    const middlePoint = Math.floor(num.length / 2);
+
+    for (let i = middlePoint; i >= 1; i--) {
+        const beginningNumber = Number(num.substring(0, i));
+        const endingNumber = Number(num.substring(length - i));
+
+        if (num.substring(0, i) === num.substring(length - i)) {
+            return i;
+        }
+
+        if (beginningNumber === endingNumber - 1) {
+            return i;
+        }
+    }
+
+    return 0;
+}
+/**
+ * Helper function for findPosition()
+ *
+ * @param {string} num - The numeric string to check for
+ * @param {string} permutation - The numeric string used to create the string that will be checked for the existence of `num`
+ * @returns {number} The index at which `num` can be found in the created string
+ */
+function findIndexInCyclicPermutation(num, permutation) {
+    const testString = `${Number(permutation) - 1}${Number(permutation)}${Number(permutation) + 1}`;
+    return testString.indexOf(num);
+}
+/**
+ * Helper function for findPosition()
+ *
+ * @param {number} num - The number to find the index of in the infinite string
+ * @returns {number} The index where `num` would be found in the infinite string
+ */
+function findIndexForNumber(num) {
+    const length = num.toString().length;
+    const firstNumberOfSameLength = 10 ** (length - 1);
+    const indexForFirstNumberOfSameLength = firstIndexForFactorOf10(length);
+    const distanceFromFirstNumberOfSameLength = (num - firstNumberOfSameLength) * length;
+
+    return indexForFirstNumberOfSameLength + distanceFromFirstNumberOfSameLength;
+}
+/**
+ * Helper function for findPosition()
+ *
+ * @param {string} num - The numeric string to find the position of in the infinite string
+ * @returns {number} The index where the numeric string can be found in the infinite string
+ */
+function findPosition2(num) {
+    const cyclicPermutations = getLowerCyclicPermutations(num);
+
+    for (const permutation of cyclicPermutations) {
+        const numBefore = (Number(permutation) - 1).toString();
+        const index = findIndexInCyclicPermutation(num, permutation);
+
+        if (index < 0) {
+            continue;
+        }
+
+        return findIndexForNumber(Number(numBefore)) + index;
+    }
+
+    if (/^0+/.test(num)) {
+        throw new Error('Number starts with 0 and we could not find a match in the cyclic permutations');
+    }
+
+    return findIndexForNumber(Number(num));
 }

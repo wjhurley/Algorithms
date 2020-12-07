@@ -1,6 +1,64 @@
 import * as MORSE_CODE from './constants/MorseCode';
 
 export class CodeWars {
+    // https://www.codewars.com/kata/52a78825cdfc2cfc87000005/train/typescript
+    public static calc(expression: string): number {
+        const allOperators: string[][] = [
+            ['*', '/'],
+            ['+', '-'],
+        ];
+        const characters = CodeWars.parseExpression(expression);
+        const parentheses: string[] = [];
+
+        for (const operators of allOperators) {
+            let leftParenthesisSet = false;
+            let operand: string[];
+            let operator: string;
+
+            for (const [i, character] of characters.entries()) {
+                let result = 0;
+
+                if (/[0-9.]/.test(character)) {
+                    operand.push(character);
+                    continue;
+                }
+
+                if (operators.indexOf(character) < 0) {
+                    operator = character;
+                    continue;
+                }
+
+                switch (character) {
+                    case '*':
+                        result = Number(characters[i - 1]) * Number(characters[i + 1]);
+                        characters.splice(i - 1, 3, result.toString());
+                        break;
+                    case '/':
+                        result = Number(characters[i - 1]) / Number(characters[i + 1]);
+                        characters.splice(i - 1, 3, result.toString());
+                        break;
+                    case '+':
+                        result = Number(characters[i - 1]) + Number(characters[i + 1]);
+                        characters.splice(i - 1, 3, result.toString());
+                        break;
+                    case '-':
+                        result = Number(characters[i - 1]) - Number(characters[i + 1]);
+                        characters.splice(i - 1, 3, result.toString());
+                        break;
+                }
+
+                if (characters.length > 1) {
+                    return CodeWars.calc(characters.join(' '));
+                }
+            }
+        }
+
+        if (characters.length > 1) {
+            return CodeWars.calc(characters.join(' '));
+        }
+
+        return Number(characters[0]);
+    }
     // https://www.codewars.com/kata/54b724efac3d5402db00065e
     public static decodeMorse = (morseCode: string): string => {
         const wordArray: string[] = morseCode.trim().split('   ');
@@ -50,6 +108,44 @@ export class CodeWars {
     // https://www.codewars.com/kata/moves-in-squared-strings-i/
     public static mirrorStrings = (fct: (string) => string, s: string) => {
         return fct(s);
+    }
+    // Helper function for calc()
+    private static parseExpression(expression: string): string[] {
+        const characters = expression
+            .replace(/\s+/g, '')
+            .split('');
+        const expressionPieces: string[] = [];
+        let operand: string[] = [];
+        const operandRegex = /[0-9.]/;
+        const operatorRegex = /[\^+\-*/()]/;
+
+        for (const [ix, character] of characters.entries()) {
+            const isLastCharacter = ix === characters.length - 1;
+            let prevCharacter = characters[ix - 1];
+            let nextCharacter = characters[ix + 1];
+
+            if (operandRegex.test(character)) {
+                operand.push(character);
+            }
+            // If the character is a minus sign and is either the first character in the
+            // string or preceded by another operator, then it is a negative sign instead
+            if (character === '-' && (ix === 0 || /[\^+\-*/]/.test(prevCharacter))) {
+                operand.push(character);
+                continue;
+            }
+
+            if (operand.length && (isLastCharacter || operatorRegex.test(nextCharacter))) {
+                expressionPieces.push(operand.join(''));
+                operand = [];
+                continue;
+            }
+
+            if (operatorRegex.test(character)) {
+                expressionPieces.push(character);
+            }
+        }
+
+        return expressionPieces;
     }
     // https://www.codewars.com/kata/550498447451fbbd7600041c
     public static squareDigits(num: number) {
