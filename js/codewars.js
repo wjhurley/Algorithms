@@ -362,3 +362,140 @@ function findPosition2(num) {
 
     return findIndexForNumber(Number(num));
 }
+/**
+ * https://www.codewars.com/kata/5ef9c85dc41b4e000f9a645f
+ *
+ * @param {number[][]} qrcode - Numeric representation of a QR code
+ * @returns {string} The decoded message extracted from the QR code
+ */
+function scanner(qrcode) {
+    function convertCoordinateIntoBit([x, y]) {
+        const num = qrcode[x][y];
+        return bitMask(num, x, y);
+    }
+
+    const lengthBits = getCoordinatesUp([18, 20]);
+    const lengthInBinary = lengthBits
+        .map(convertCoordinateIntoBit)
+        .join('');
+    const length = parseInt(lengthInBinary, 2);
+    const charBits = [
+        getCoordinatesUp([14, 20]),
+        getCoordinatesCounterClockwise([10, 20]),
+        getCoordinatesDown([11, 18]),
+        getCoordinatesDown([15, 18]),
+        getCoordinatesClockwise([19, 18]),
+        getCoordinatesUp([18, 16]),
+        getCoordinatesUp([14, 16]),
+        getCoordinatesCounterClockwise([10, 16]),
+    ];
+    const charsInBinary = charBits
+        .slice(0, length)
+        .map(char => char
+            .map(convertCoordinateIntoBit)
+            .join(''));
+    let message = '';
+
+    for (const binary of charsInBinary) {
+        const num = parseInt(binary, 2);
+        const char = String.fromCharCode(num);
+        message += char;
+    }
+
+    return message;
+}
+/**
+ * Helper function for scanner()
+ *
+ * @param {number} num - The number to potentially be flipped
+ * @param {number} x - The x coordinate where `num` is located in the QR code
+ * @param {number} y - The y coordinate where `num` is located in the QR code
+ * @returns {number} `num`, either flipped or left as-is (0 or 1)
+ */
+function bitMask(num, x, y) {
+    return (x + y) % 2 === 0
+        ? num === 1
+            ? 0
+            : 1
+        : num;
+}
+/**
+ * Helper function for scanner()
+ *
+ * @param {number[]} param0 - The starting coordinates of the binary number
+ * @returns {number[][]} The coordinates for all digits making up the binary number
+ */
+function getCoordinatesClockwise([startX, startY]) {
+    const coordinates = [];
+
+    for (let x = startX; x < startX + 2; x++) {
+        for (let y = startY; y > startY - 2; y--) {
+            coordinates.push([x, y]);
+        }
+    }
+
+    for (let x = startX + 1; x > startX - 1; x--) {
+        for (let y = startY - 2; y > startY - 4; y--) {
+            coordinates.push([x, y]);
+        }
+    }
+
+    return coordinates;
+}
+/**
+ * Helper function for scanner()
+ *
+ * @param {number[]} param0 - The starting coordinates of the binary number
+ * @returns {number[][]} The coordinates for all digits making up the binary number
+ */
+function getCoordinatesCounterClockwise([startX, startY]) {
+    const coordinates = [];
+
+    for (let x = startX; x > startX - 2; x--) {
+        for (let y = startY; y > startY - 2; y--) {
+            coordinates.push([x, y]);
+        }
+    }
+
+    for (let x = startX - 1; x < startX + 1; x++) {
+        for (let y = startY - 2; y > startY - 4; y--) {
+            coordinates.push([x, y]);
+        }
+    }
+
+    return coordinates;
+}
+/**
+ * Helper function for scanner()
+ *
+ * @param {number[]} param0 - The starting coordinates of the binary number
+ * @returns {number[][]} The coordinates for all digits making up the binary number
+ */
+function getCoordinatesDown([startX, startY]) {
+    const coordinates = [];
+
+    for (let x = startX; x < startX + 4; x++) {
+        for (let y = startY; y > startY - 2; y--) {
+            coordinates.push([x, y]);
+        }
+    }
+
+    return coordinates;
+}
+/**
+ * Helper function for scanner()
+ *
+ * @param {number[]} param0 - The starting coordinates of the binary number
+ * @returns {number[][]} The coordinates for all digits making up the binary number
+ */
+function getCoordinatesUp([startX, startY]) {
+    const coordinates = [];
+
+    for (let x = startX; x > startX - 4; x--) {
+        for (let y = startY; y > startY - 2; y--) {
+            coordinates.push([x, y]);
+        }
+    }
+
+    return coordinates;
+}
