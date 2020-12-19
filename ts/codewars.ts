@@ -90,6 +90,45 @@ export class CodeWars {
         };
         return dna.replace(/([A])|([T])|([C])|([G])/gi, replacer);
     }
+
+    public static isInteresting(n: number, awesomePhrases: number[]): number {
+        if (n < 98) {
+            return 0;
+        }
+
+        if (98 <= n && n < 100) {
+            return 1;
+        }
+
+        for (let i = n; i <= n + 2; i++) {
+            const stringifiedNum = i.toString();
+            const repeatingNumberRegex = new RegExp(`^${stringifiedNum[0]}+$`);
+            const reversed = stringifiedNum.split('').reverse().join('');
+            const sequentialIncrementing = '1234567890';
+            const sequentialDecrementing = '9876543210';
+            let isInterestingNum = false;
+
+            if (/^[1-9]0+$/.test(stringifiedNum) // Test for numbers ending in 0's
+                || repeatingNumberRegex.test(stringifiedNum) // Test for repeating digits
+                || sequentialIncrementing.indexOf(stringifiedNum) > -1 // Test for incrementing sequential numbers
+                || sequentialDecrementing.indexOf(stringifiedNum) > -1 // Test for decrementing sequential numbers
+                || stringifiedNum === reversed // Test for palindrome
+                || awesomePhrases.includes(i) // Test for match in array
+            ) {
+                isInterestingNum = true;
+            }
+
+            if (isInterestingNum) {
+                if (i === n) {
+                    return 2;
+                }
+
+                return 1;
+            }
+        }
+
+        return 0;
+    }
     // https://www.codewars.com/kata/5663f5305102699bad000056
     public static maxDiffLength = (a1: string[], a2: string[]): number => {
         if (a1.length === 0 || a2.length === 0) {
