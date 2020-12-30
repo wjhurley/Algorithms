@@ -198,6 +198,73 @@ export class CodeWars {
       
         return Number(numberString);
     }
+    // https://www.codewars.com/kata/52b7ed099cdc285c300001cd
+    public static sumOfIntervals(intervals: [number, number][]): number {
+        const sortedIntervals = [...intervals].sort((a, b) => a[0] - b[0]);
+        const simplifiedArrays = sortedIntervals.reduce((startStops: number[][], [start, stop]) => {
+            let newStart: number = start;
+            let newStop: number = stop;
+
+            for (const [otherStart, otherStop] of sortedIntervals) {
+                // Filter out matching start/stop
+                if (start === otherStart && stop === otherStop) {
+                    continue;
+                }
+
+                if (CodeWars.isOverlappingRanges([newStart, newStop], [otherStart, otherStop])) {
+                    newStart = Math.min(newStart, otherStart);
+                    newStop = Math.max(newStop, otherStop);
+                }
+            }
+
+            const isNewRangeInArray = startStops.some(([a, b]) => a === newStart && b === newStop);
+
+            if (startStops.length === 0 || !isNewRangeInArray) {
+                startStops.push([newStart, newStop]);
+            }
+
+            const newStartStops = startStops.reduce((newRanges: number[][], [oldStart, oldStop]) => {
+                const isValueEqualToNewRange = newStart === oldStart && newStop === oldStop;
+                const isValueAlreadyInArray = newRanges.some(([a, b]) => a === oldStart && b === oldStop);
+
+                if (isValueAlreadyInArray) {
+                    return newRanges;
+                }
+
+                if (CodeWars.isOverlappingRanges([newStart, newStop], [oldStart, oldStop])) {
+                    newStart = Math.min(newStart, oldStart);
+                    newStop = Math.max(newStop, oldStop);
+
+                    if (!newRanges.some(([a, b]) => a === newStart && b === newStop)) {
+                        newRanges.push([newStart, newStop]);
+                        return newRanges;
+                    }
+                }
+
+                if (!newRanges.some(([a, b]) => a === newStart && b === newStop)) {
+                    newRanges.push([oldStart, oldStop]);
+                    return newRanges;
+                }
+
+                return newRanges;
+            }, []);
+
+            return newStartStops;
+        }, []);
+
+        return simplifiedArrays.reduce((total, [start, stop]) => {
+            return total += stop - start;
+        }, 0);
+    }
+    // Helper function for sumOfIntervals()
+    private static isOverlappingRanges([startA, stopA]: number[], [startB, stopB]: number[]): boolean {
+        const isStartAInRange = startB < startA && startA < stopB;
+        const isStopAInRange = startB < stopA && stopA < stopB;
+        const isStartBInRange = startA < startB && startB < stopA;
+        const isStopBInRange = startA < stopB && stopB < stopA;
+
+        return isStartAInRange || isStopAInRange || isStartBInRange || isStopBInRange;
+    }
     // https://www.codewars.com/kata/56eb0be52caf798c630013c0
     public static unluckyDays(year: number): number {
         let blackFridays = 0;
