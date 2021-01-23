@@ -1,4 +1,4 @@
-export const MorseCode = {
+export const MorseCode: { [key: string]: string } = {
   '-.-.--': '!',
   '.-..-.': '"',
   '...-..-': '$',

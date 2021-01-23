@@ -1,4 +1,4 @@
-import * as MORSE_CODE from './constants/MorseCode';
+import { MorseCode as MORSE_CODE } from './constants/MorseCode';
 
 export class CodeWars {
     // https://www.codewars.com/kata/52a78825cdfc2cfc87000005/train/typescript
@@ -12,7 +12,7 @@ export class CodeWars {
 
         for (const operators of allOperators) {
             let leftParenthesisSet = false;
-            let operand: string[];
+            const operand: string[] = [];
             let operator: string;
 
             for (const [i, character] of characters.entries()) {
@@ -90,7 +90,14 @@ export class CodeWars {
         };
         return dna.replace(/([A])|([T])|([C])|([G])/gi, replacer);
     }
-
+    // horMirror and vertMirror are private and only called from mirrorStrings(), which are passed in as the first parameter.
+    private static horMirror = (strng: string): string => {
+        return strng
+            .split('\n')
+            .reverse()
+            .join('\n');
+    }
+    // https://www.codewars.com/kata/52c4dd683bfd3b434c000292
     public static isInteresting(n: number, awesomePhrases: number[]): number {
         if (n < 98) {
             return 0;
@@ -129,6 +136,15 @@ export class CodeWars {
 
         return 0;
     }
+    // Helper function for sumOfIntervals()
+    private static isOverlappingRanges([startA, stopA]: number[], [startB, stopB]: number[]): boolean {
+        const isStartAInRange = startB < startA && startA < stopB;
+        const isStopAInRange = startB < stopA && stopA < stopB;
+        const isStartBInRange = startA < startB && startB < stopA;
+        const isStopBInRange = startA < stopB && stopB < stopA;
+
+        return isStartAInRange || isStopAInRange || isStartBInRange || isStopBInRange;
+    }
     // https://www.codewars.com/kata/5663f5305102699bad000056
     public static maxDiffLength = (a1: string[], a2: string[]): number => {
         if (a1.length === 0 || a2.length === 0) {
@@ -145,7 +161,7 @@ export class CodeWars {
         return Math.max(maxWithA1Shortest, maxWithA2Shortest);
     }
     // https://www.codewars.com/kata/moves-in-squared-strings-i/
-    public static mirrorStrings = (fct: (string) => string, s: string) => {
+    public static mirrorStrings = (fct: (str: string) => string, s: string) => {
         return fct(s);
     }
     // Helper function for calc()
@@ -185,6 +201,54 @@ export class CodeWars {
         }
 
         return expressionPieces;
+    }
+    // https://www.codewars.com/kata/58ade79f3c97367977000274
+    public static roastLegacy(workloads: string): string {
+        const complaintKeywords = [
+            'down!',
+            'expensive!',
+            'hostage!',
+            'manual!',
+            'security!',
+            'slow!',
+        ];
+        const complaints = complaintKeywords.reduce<number>((total, complaint) => {
+            const regex = new RegExp(complaint, 'gi');
+            const matches = workloads.match(regex);
+    
+            if (matches === null) {
+                return total;
+            }
+    
+            return total + matches.length;
+        }, 0);
+        const legacies = {
+            COBOL: 1000,
+            nonobject: 500,
+            monolithic: 500,
+            fax: 100,
+            modem: 100,
+            thickclient: 50,
+            tape: 50,
+            floppy: 50,
+            oldschoolIT: 50,
+        };
+        const legacy = Object.entries(legacies).reduce<number>((total, [key, value]) => {
+            const regex = new RegExp(key, 'gi');
+            const matches = workloads.match(regex);
+    
+            if (matches === null) {
+                return total;
+            }
+    
+            return total + (value * matches.length);
+        }, 0);
+    
+        if (complaints === 0 && legacy === 0) {
+            return 'These guys are already DevOps and in the Cloud and the business is happy!';
+        }
+    
+        return `Burn baby burn disco inferno ${legacy} points earned in this roasting and ${complaints} complaints resolved!`;
     }
     // https://www.codewars.com/kata/550498447451fbbd7600041c
     public static squareDigits(num: number) {
@@ -256,15 +320,6 @@ export class CodeWars {
             return total += stop - start;
         }, 0);
     }
-    // Helper function for sumOfIntervals()
-    private static isOverlappingRanges([startA, stopA]: number[], [startB, stopB]: number[]): boolean {
-        const isStartAInRange = startB < startA && startA < stopB;
-        const isStopAInRange = startB < stopA && stopA < stopB;
-        const isStartBInRange = startA < startB && startB < stopA;
-        const isStopBInRange = startA < stopB && stopB < stopA;
-
-        return isStartAInRange || isStopAInRange || isStartBInRange || isStopBInRange;
-    }
     // https://www.codewars.com/kata/56eb0be52caf798c630013c0
     public static unluckyDays(year: number): number {
         let blackFridays = 0;
@@ -279,17 +334,7 @@ export class CodeWars {
     
         return blackFridays;
     }
-    /**
-    * horMirror and vertMirror are private and only called from
-    * mirrorStrings(), which are passed in as the first parameter.
-    */
-    private static horMirror = (strng: string): string => {
-        return strng
-            .split('\n')
-            .reverse()
-            .join('\n');
-    }
-
+    // horMirror and vertMirror are private and only called from mirrorStrings(), which are passed in as the first parameter.
     private static vertMirror = (strng: string): string => {
         return strng
             .split('\n')
