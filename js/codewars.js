@@ -196,6 +196,56 @@ function firstIndexForFactorOf10(digitsLength) {
     return total;
 }
 /**
+ * https://www.codewars.com/kata/52742f58faf5485cae000b9a
+ *
+ * @param {number} seconds - the number of seconds to convert to a human-readable string (e.g. 62 === 1 minute and 2 seconds)
+ * @returns {string} The human-readeable representation of the seconds provided, or 'now' if 0 is provided
+ */
+function formatDuration(seconds) {
+    const duration = {
+        day: 24 * 60 * 60,
+        hour: 60 * 60,
+        minute: 60,
+        second: 1,
+        year: 365 * 24 * 60 * 60,
+    };
+    let durationInSeconds = seconds;
+
+    if (seconds === 0) {
+        return 'now';
+    }
+
+    return Object.entries(duration)
+        .sort(([keyA, valueA], [keyB, valueB]) => valueB - valueA)
+        .reduce((
+            humanReadableFormat,
+            [key, secondsPerUnit],
+            index,
+            arr,
+        ) => {
+            const numberOfUnits = Math.floor(durationInSeconds / secondsPerUnit);
+            const label = numberOfUnits > 1
+                ? `${key}s`
+                : key;
+            let joiner = ', ';
+
+            if (index === arr.length - 1 || durationInSeconds % secondsPerUnit === 0) {
+                joiner = ' and ';
+            }
+
+            if (index === 0 || humanReadableFormat === '') {
+                joiner = '';
+            }
+
+            if (numberOfUnits === 0) {
+                return humanReadableFormat;
+            }
+
+            durationInSeconds -= secondsPerUnit * numberOfUnits;
+            return `${humanReadableFormat}${joiner}${numberOfUnits} ${label}`;
+        }, '');
+}
+/**
  * Helper function for findPosition()
  *
  * @param {number} num - The number to start the infinite string at.
