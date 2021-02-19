@@ -91,6 +91,45 @@ function calculator(str) {
     return characters[0];
 }
 /**
+ * https://www.codewars.com/kata/5d98b6b38b0f6c001a461198
+ *
+ * @param {string} strng - The string of numbers to encode
+ * @returns {string} The encoded numbers, represented as a string of numbers
+ */
+function code(strng) {
+    return strng
+        .split('')
+        .map(num => Number(num))
+        .reduce((codedNumbers, num) => {
+            const binary = num.toString(2);
+            const numZeroes = binary.length - 1;
+            const prefix = Array(numZeroes).fill('0').join('') + '1';
+            const codedNumber = prefix + binary.toString();
+
+            return codedNumbers + codedNumber;
+        }, '');
+}
+/**
+ * https://www.codewars.com/kata/5d98b6b38b0f6c001a461198
+ *
+ * @param {string} str - The string of numbers to decode
+ * @returns {string} The decoded numbers, represented as a string of numbers
+ */
+function decode(str) {
+    let remainingNumbers = str;
+    const decodedNumbers = [];
+    debugger;
+    while (remainingNumbers.length > 1) {
+        const startOfBinary = remainingNumbers.indexOf('1') + 1;
+        const prefix = remainingNumbers.slice(0, startOfBinary); //?
+        const binary = remainingNumbers.slice(startOfBinary, startOfBinary + prefix.length);
+        decodedNumbers.push(Number(parseInt(binary, 2)));
+        remainingNumbers = remainingNumbers.slice(prefix.length + binary.length);
+    }
+
+    return decodedNumbers.join('');
+}
+/**
  * https://www.codewars.com/kata/54b724efac3d5402db00065e
  *
  * @param {string} morseCode - The morse code to decode
