@@ -59,6 +59,13 @@ export class CodeWars {
 
         return Number(characters[0]);
     }
+    // https://www.codewars.com/kata/55e7280b40e1c4a06d0000aa
+    public static chooseBestSum(maxDistance: number, numTowns: number, distances: number[]): number | null {
+        return CodeWars.getCombinations([], distances, [])
+            .filter(combination => combination.length === numTowns && combination.reduce((acc, dist) => acc + dist) <= maxDistance)
+            .map(combination => combination.reduce((acc, dist) => acc + dist))
+            .sort((a, b) => b - a)[0] || null;
+    }
     // https://www.codewars.com/kata/54b724efac3d5402db00065e
     public static decodeMorse = (morseCode: string): string => {
         const wordArray: string[] = morseCode.trim().split('   ');
@@ -89,6 +96,21 @@ export class CodeWars {
                             : '';
         };
         return dna.replace(/([A])|([T])|([C])|([G])/gi, replacer);
+    }
+    // Helper function for chooseBestSum()
+    public static getCombinations(activeDistances: number[], remainingDistances: number[], combinations: number[][]): number[][] {
+        if (!activeDistances.length && !remainingDistances.length) {
+            return combinations;
+        }
+    
+        if (!remainingDistances.length) {
+            combinations.push(activeDistances);
+        } else {
+            CodeWars.getCombinations([...activeDistances, remainingDistances[0]], remainingDistances.slice(1), combinations);
+            CodeWars.getCombinations(activeDistances, remainingDistances.slice(1), combinations);
+        }
+    
+        return combinations;
     }
     // horMirror and vertMirror are private and only called from mirrorStrings(), which are passed in as the first parameter.
     private static horMirror = (strng: string): string => {
