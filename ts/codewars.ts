@@ -186,6 +186,27 @@ export class CodeWars {
     public static mirrorStrings = (fct: (str: string) => string, s: string) => {
         return fct(s);
     }
+    // https://www.codewars.com/kata/514b92a657cdc65150000006
+    public static multiplesOf3Or5(num: number): number {
+        const multiples: number[] = [];
+
+        if (num <= 0) {
+            return 0;
+        }
+
+        for (let multiple = 1; multiple < num; multiple++) {
+            if (multiple % 3 === 0 && multiples.indexOf(multiple) < 0) {
+                multiples.push(multiple);
+                continue;
+            }
+
+            if (multiple % 5 === 0 && multiples.indexOf(multiple) < 0) {
+                multiples.push(multiple);
+            }
+        }
+
+        return multiples.reduce((acc, val) => acc + val, 0);
+    }
     // Helper function for calc()
     private static parseExpression(expression: string): string[] {
         const characters = expression
