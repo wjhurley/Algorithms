@@ -1,6 +1,18 @@
 import { MorseCode as MORSE_CODE } from './constants/MorseCode';
 
 export class CodeWars {
+    // https://www.codewars.com/kata/539a0e4d85e3425cb0000a88
+    public static add(num: number): AddReturnType {
+        const adder = (n: number): AddReturnType => {
+            num += n;
+            return adder;
+        };
+
+        adder.valueOf = (): number => num;
+        adder.toString = (): string => '' + num;
+
+        return adder;
+    }
     // https://www.codewars.com/kata/52a78825cdfc2cfc87000005/train/typescript
     public static calc(expression: string): number {
         const allOperators: string[][] = [
@@ -72,11 +84,9 @@ export class CodeWars {
         const convertedWords: string[] = [];
 
         wordArray.forEach((el: string) => {
-            let newWord: string = el
+            const newWord: string = el
                 .split(' ')
-                .reduce((acc: string, elem: string) => {
-                    return acc + MORSE_CODE[elem];
-                }, '');
+                .reduce((acc: string, elem: string) => acc + MORSE_CODE[elem], '');
             convertedWords.push(newWord);
         });
 
@@ -84,8 +94,8 @@ export class CodeWars {
     }
     // https://www.codewars.com/kata/554e4a2f232cdd87d9000038
     public static dnaComplements = (dna: string): string => {
-        const replacer = (m: string, p1: string, p2: string, p3: string, p4: string): string => {
-            return m === p1
+        const replacer = (m: string, p1: string, p2: string, p3: string, p4: string): string =>
+            m === p1
                 ? 'T'
                 : m === p2
                     ? 'A'
@@ -94,7 +104,6 @@ export class CodeWars {
                         : m === p4
                             ? 'C'
                             : '';
-        };
         return dna.replace(/([A])|([T])|([C])|([G])/gi, replacer);
     }
     // Helper function for chooseBestSum()
@@ -102,23 +111,22 @@ export class CodeWars {
         if (!activeDistances.length && !remainingDistances.length) {
             return combinations;
         }
-    
+
         if (!remainingDistances.length) {
             combinations.push(activeDistances);
         } else {
             CodeWars.getCombinations([...activeDistances, remainingDistances[0]], remainingDistances.slice(1), combinations);
             CodeWars.getCombinations(activeDistances, remainingDistances.slice(1), combinations);
         }
-    
+
         return combinations;
     }
     // horMirror and vertMirror are private and only called from mirrorStrings(), which are passed in as the first parameter.
-    private static horMirror = (strng: string): string => {
-        return strng
+    private static horMirror = (strng: string): string =>
+        strng
             .split('\n')
             .reverse()
             .join('\n');
-    }
     // https://www.codewars.com/kata/52c4dd683bfd3b434c000292
     public static isInteresting(n: number, awesomePhrases: number[]): number {
         if (n < 98) {
@@ -183,9 +191,7 @@ export class CodeWars {
         return Math.max(maxWithA1Shortest, maxWithA2Shortest);
     }
     // https://www.codewars.com/kata/moves-in-squared-strings-i/
-    public static mirrorStrings = (fct: (str: string) => string, s: string) => {
-        return fct(s);
-    }
+    public static mirrorStrings = (fct: (str: string) => string, s: string): string => fct(s);
     // https://www.codewars.com/kata/514b92a657cdc65150000006
     public static multiplesOf3Or5(num: number): number {
         const multiples: number[] = [];
@@ -219,8 +225,8 @@ export class CodeWars {
 
         for (const [ix, character] of characters.entries()) {
             const isLastCharacter = ix === characters.length - 1;
-            let prevCharacter = characters[ix - 1];
-            let nextCharacter = characters[ix + 1];
+            const prevCharacter = characters[ix - 1];
+            const nextCharacter = characters[ix + 1];
 
             if (operandRegex.test(character)) {
                 operand.push(character);
@@ -258,11 +264,11 @@ export class CodeWars {
         const complaints = complaintKeywords.reduce<number>((total, complaint) => {
             const regex = new RegExp(complaint, 'gi');
             const matches = workloads.match(regex);
-    
+
             if (matches === null) {
                 return total;
             }
-    
+
             return total + matches.length;
         }, 0);
         const legacies = {
@@ -279,30 +285,30 @@ export class CodeWars {
         const legacy = Object.entries(legacies).reduce<number>((total, [key, value]) => {
             const regex = new RegExp(key, 'gi');
             const matches = workloads.match(regex);
-    
+
             if (matches === null) {
                 return total;
             }
-    
+
             return total + (value * matches.length);
         }, 0);
-    
+
         if (complaints === 0 && legacy === 0) {
             return 'These guys are already DevOps and in the Cloud and the business is happy!';
         }
-    
+
         return `Burn baby burn disco inferno ${legacy} points earned in this roasting and ${complaints} complaints resolved!`;
     }
     // https://www.codewars.com/kata/550498447451fbbd7600041c
-    public static squareDigits(num: number) {
+    public static squareDigits(num: number): number {
         const numberArray: string[] = num.toString().split('');
-        let numberString: string = '';
-        
+        let numberString = '';
+
         numberArray.forEach((el: string): void => {
-            let squared: number = Number(el) * Number(el);
+            const squared: number = Number(el) * Number(el);
             numberString += squared.toString();
         });
-      
+
         return Number(numberString);
     }
     // https://www.codewars.com/kata/52b7ed099cdc285c300001cd
@@ -331,7 +337,6 @@ export class CodeWars {
             }
 
             const newStartStops = startStops.reduce((newRanges: number[][], [oldStart, oldStop]) => {
-                const isValueEqualToNewRange = newStart === oldStart && newStop === oldStop;
                 const isValueAlreadyInArray = newRanges.some(([a, b]) => a === oldStart && b === oldStop);
 
                 if (isValueAlreadyInArray) {
@@ -359,36 +364,33 @@ export class CodeWars {
             return newStartStops;
         }, []);
 
-        return simplifiedArrays.reduce((total, [start, stop]) => {
-            return total += stop - start;
-        }, 0);
+        return simplifiedArrays.reduce((total, [start, stop]) => total += stop - start, 0);
     }
     // https://www.codewars.com/kata/56eb0be52caf798c630013c0
     public static unluckyDays(year: number): number {
         let blackFridays = 0;
-    
+
         for (let i = 1; i <= 12; i++) {
             const thirteenthDay = new Date(`${year}-${i}-13 00:00:00`).getDay();
-    
+
             if (thirteenthDay === 5) {
                 blackFridays++;
             }
         }
-    
+
         return blackFridays;
     }
     // horMirror and vertMirror are private and only called from mirrorStrings(), which are passed in as the first parameter.
-    private static vertMirror = (strng: string): string => {
-        return strng
+    private static vertMirror = (strng: string): string =>
+        strng
             .split('\n')
-            .map((el: string) => {
-                return el
+            .map((el: string) =>
+                el
                     .split('')
                     .reverse()
-                    .join('');
-            })
+                    .join('')
+            )
             .join('\n');
-    }
 }
 
 export default CodeWars;
