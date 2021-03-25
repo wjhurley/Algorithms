@@ -391,6 +391,17 @@ export class CodeWars {
                     .join('')
             )
             .join('\n');
+    // https://www.codewars.com/kata/55908aad6620c066bc00002a
+    public static xo(str: string): boolean {
+        const xs = str.match(/x/gi);
+        const os = str.match(/o/gi);
+
+        if (xs === null && os === null) {
+            return true;
+        }
+
+        return xs !== null && os !== null && xs.length === os.length;
+    }
 }
 
 export default CodeWars;
